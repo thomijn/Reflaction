@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1021393979453",
+    "project_id": "reflaction-ff5c7",
+    "storage_bucket": "reflaction-ff5c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021393979453:android:e93f04c49e86489e77c254",
+        "android_client_info": {
+          "package_name": "com.cmi.reflaction"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021393979453-fv2s4qlkcb3cgjvi7gseh8sdns5fd3mf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhYPn0FjmO1DSTOPqu0_hLK8hbg6HPDOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021393979453-fv2s4qlkcb3cgjvi7gseh8sdns5fd3mf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
