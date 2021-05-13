@@ -1,23 +1,24 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {View} from 'react-native';
+import {View, Animated, TouchableOpacity, Keyboard} from 'react-native';
+import Icon from 'react-native-vector-icons/dist/Ionicons';
 
 import {Button} from '../atoms/Buttons';
-import {Container} from '../atoms/Container';
 import Input from '../atoms/Inputs';
 import {Header, Text} from '../atoms/Texts';
 import {useStore} from '../../store';
-import LinearGradient from 'react-native-linear-gradient';
-import {onGoogleButtonPress} from '../../hooks/googleLogin';
+import {theme} from '../../App';
 
-const LoginScreen = ({navigation: {navigate}}) => {
+const LoginScreen = ({navigate, fadeAnim, fadeOut}) => {
   const {control, handleSubmit} = useForm();
   const {setUser} = useStore();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (data) => {
-    console.log(data);
+    Keyboard.dismiss();
+    setLoading(true);
     auth()
       .signInWithEmailAndPassword(data.email, data.password)
       .then(async (user) => {
@@ -26,9 +27,15 @@ const LoginScreen = ({navigation: {navigate}}) => {
           .doc(user.user._user.uid)
           .get();
         setUser({...userInfo._data, uid: user.user._user.uid});
-        navigate('Home');
+        setLoading(false);
+        if (userInfo.exists) {
+          navigate('Home');
+        } else {
+          navigate('Sign up');
+        }
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   };
@@ -41,85 +48,90 @@ const LoginScreen = ({navigation: {navigate}}) => {
           .doc(user._user.uid)
           .get();
         setUser({...userInfo._data, uid: user._user.uid});
-        navigate('Home');
+        if (userInfo.exists) {
+          navigate('Home');
+        } else {
+          navigate('Sign up');
+        }
       }
     });
   }, []);
 
   return (
-    <LinearGradient
-      start={{x: 0.0, y: 0.25}}
-      end={{x: 0.5, y: 1.0}}
-      locations={[0, 0.5]}
-      style={{padding: 40}}
-      colors={['#1ED2FC', '#015FDF']}>
-      <Header margin="0px 0px 20px 0px">Login</Header>
-      <Text margin="20px 0px 50px 0px" fontSize="20px">
-        Lorem ipsum dolor sit amet, et mei ipsum molestie, cu illud minim
-        commune eam. Quo case
-      </Text>
+    <Animated.View
+      style={[
+        {
+          backgroundColor: '#fff',
+          position: 'absolute',
+          bottom: 0,
+          height: 400,
+          width: '100%',
+          padding: 40,
+          elevation: 8,
+        },
+        {transform: [{translateY: fadeAnim}]},
+      ]}>
+      <TouchableOpacity
+        onPress={() => fadeOut()}
+        activeOpacity={0.9}
+        style={{
+          width: 50,
+          height: 50,
+          borderRadius: 50 / 2,
+          backgroundColor: theme.colors.orange,
+          position: 'absolute',
+          top: -25,
+          right: 50,
+          display: 'flex',
+          direction: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          elevation: 6,
+        }}>
+        <Icon onPress={() => fadeOut()} name="close" size={30} color="#fff" />
+      </TouchableOpacity>
+      <Header style={{marginBottom: 20}}>Inloggen</Header>
       <Input
-        placeholderTextColor="rgb(3, 101, 154)"
-        placeholder="Gebruikersnaam"
+        placeholderTextColor=" rgba(0, 0, 0, 0.5)"
+        placeholder="Email"
         label="Email"
         name="email"
         control={control}
       />
       <Input
-        placeholderTextColor="rgb(3, 101, 154)"
+        placeholderTextColor=" rgba(0, 0, 0, 0.5)"
         placeholder="Wachtwoord"
         label="Wachwoord"
         secureTextEntry
         name="password"
         control={control}
       />
-      <Container>
-        <View
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-          <View
-            style={{
-              width: '48%',
-              marginRight: 10,
-            }}>
-            <Button
-              margin="10px 0px 30px 0px"
-              text="Login"
-              small
-              onPress={handleSubmit(onSubmit)}
-            />
-          </View>
-          <View
-            style={{
-              width: '48%',
-            }}>
-            <Button
-              google
-              margin="10px 0px 30px 0px"
-              text="Google"
-              onPress={() =>
-                onGoogleButtonPress()
-                  .then(() => {
-                    navigate('Home');
-                    console.log('Signed in with Google!');
-                  })
-                  .catch((err) => console.log(err))
-              }
-            />
-          </View>
+      <Button
+        margin="10px 0px 30px 0px"
+        text="Sign in"
+        loading={loading}
+        onPress={handleSubmit(onSubmit)}
+      />
+      <View
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexWrap: 'wrap',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}>
+        <View style={{width: '60%'}}>
+          <Text style={{textAlign: 'left'}} color={theme.colors.orange}>
+            Wachtwoord vergeten
+          </Text>
         </View>
-        <Text
-          onPress={() => navigate('Register')}
-          style={{opacity: 0.5, textAlign: 'center'}}>
-          Sign up
-        </Text>
-      </Container>
-    </LinearGradient>
+        <View style={{width: '40%'}}>
+          <Text style={{textAlign: 'right'}} color="#000">
+            Sign up
+          </Text>
+        </View>
+      </View>
+    </Animated.View>
   );
 };
 

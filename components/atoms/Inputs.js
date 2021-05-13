@@ -3,11 +3,10 @@ import styled from 'styled-components/native';
 import {Controller} from 'react-hook-form';
 
 export const InputStyled = styled.TextInput`
-  background: #fff;
-  border-radius: 20px;
-  padding: 5px 20px 5px 20px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  padding: 10px 20px 10px 20px;
   margin: ${(props) => props.margin || '10px 0px 10px 0px'};
-  elevation: 2;
 `;
 
 export const Label = styled.Text`

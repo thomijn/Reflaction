@@ -1,5 +1,4 @@
 package com.cmi.reflaction;
-import com.BV.LinearGradient.LinearGradientPackage;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -25,7 +24,6 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
          
-         packages.add(new LinearGradientPackage());
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;
@@ -35,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+
       };
 
   @Override

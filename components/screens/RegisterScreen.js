@@ -1,31 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import auth from '@react-native-firebase/auth';
+import Icon from 'react-native-vector-icons/dist/Ionicons';
+import {View, TouchableOpacity, Animated, Keyboard} from 'react-native';
 
 import {Button} from '../atoms/Buttons';
-import {Container} from '../atoms/Container';
 import Input from '../atoms/Inputs';
-import {Header} from '../atoms/Texts';
+import {Header, Text} from '../atoms/Texts';
 import {useStore} from '../../store';
-import LinearGradient from 'react-native-linear-gradient';
+import {theme} from '../../App';
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({navigate, fadeAnimRegister, fadeOut}) => {
   const {control, handleSubmit} = useForm();
   const [initializing, setInitializing] = useState(true);
   const {setUser} = useStore();
 
   //create new user
   const onSubmit = (data) => {
+    Keyboard.dismiss();
     auth()
       .createUserWithEmailAndPassword(data.email, data.password)
       .then((user) => {
         setUser({uid: user.user._user.uid});
-        // firestore().collection('users').doc(user.user._user.uid).set({
-        //   firstName: data.firstName,
-        //   lastName: data.lastName,
-        // });
         console.log('User account created & signed in!');
-        navigation.navigate('Home');
+        navigate('Home');
       })
       .catch((error) => {
         console.error(error);
@@ -44,32 +42,84 @@ const RegisterScreen = ({navigation}) => {
   }, []);
 
   if (initializing) return null;
-
   return (
-    <LinearGradient
-      start={{x: 0.0, y: 0.25}}
-      end={{x: 0.5, y: 1.0}}
-      locations={[0, 0.5]}
-      style={{padding: 20}}
-      colors={['#1ED2FC', '#015FDF']}>
-      <Container>
-        <Header margin="0px 0px 20px 0px">Registreren</Header>
-        <Input
-          placeholder="email"
-          label="Email"
-          name="email"
-          control={control}
+    <Animated.View
+      style={[
+        {
+          backgroundColor: '#fff',
+          position: 'absolute',
+          bottom: 0,
+          height: 400,
+          width: '100%',
+          padding: 40,
+          elevation: 8,
+        },
+        {transform: [{translateY: fadeAnimRegister}]},
+      ]}>
+      <TouchableOpacity
+        onPress={() => fadeOut(true)}
+        style={{
+          width: 50,
+          height: 50,
+          borderRadius: 50 / 2,
+          backgroundColor: theme.colors.orange,
+          position: 'absolute',
+          top: -25,
+          right: 50,
+          display: 'flex',
+          direction: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          elevation: 6,
+        }}>
+        <Icon
+          onPress={() => fadeOut(true)}
+          name="close"
+          size={30}
+          color="#fff"
         />
-        <Input
-          placeholder="Wachtwoord"
-          label="Wachwoord"
-          secureTextEntry
-          name="password"
-          control={control}
-        />
-        <Button text="Sign up" onPress={handleSubmit(onSubmit)} />
-      </Container>
-    </LinearGradient>
+      </TouchableOpacity>
+      <Header style={{marginBottom: 20}}>Registreren</Header>
+      <Input
+        placeholderTextColor=" rgba(0, 0, 0, 0.5)"
+        placeholder="Email"
+        label="Email"
+        name="email"
+        control={control}
+      />
+      <Input
+        placeholderTextColor=" rgba(0, 0, 0, 0.5)"
+        placeholder="Wachtwoord"
+        label="Wachwoord"
+        secureTextEntry
+        name="password"
+        control={control}
+      />
+      <Button
+        margin="10px 0px 30px 0px"
+        text="Sign up"
+        onPress={handleSubmit(onSubmit)}
+      />
+      <View
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexWrap: 'wrap',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}>
+        <View style={{width: '60%'}}>
+          <Text style={{textAlign: 'left'}} color={theme.colors.orange}>
+            Heb je al een account?
+          </Text>
+        </View>
+        <View style={{width: '40%'}}>
+          <Text style={{textAlign: 'right'}} color="#000">
+            Sign in
+          </Text>
+        </View>
+      </View>
+    </Animated.View>
   );
 };
 
