@@ -27,11 +27,20 @@ const ChatScreen = () => {
       .catch((err) => console.log(err));
   };
 
+  const getMessage = () => {
+    const sorted = messagesDoc?.messages.sort(
+      (a, b) => b.createdAt - a.createdAt,
+    );
+
+    return sorted.map((message) => {
+      return {...message, createdAt: message.createdAt.toDate()};
+    });
+  };
+
   return messagesDoc?.messages.length ? (
     <GiftedChat
-      messages={messagesDoc?.messages.map((message) => {
-        return {...message, createdAt: message.createdAt.toDate()};
-      })}
+      inverted
+      messages={getMessage()}
       onSend={(messages) => onSend(messages)}
       user={{
         _id: user.uid,
@@ -39,6 +48,7 @@ const ChatScreen = () => {
     />
   ) : (
     <GiftedChat
+      inverted
       messages={[]}
       onSend={(messages) => onSend(messages)}
       user={{
