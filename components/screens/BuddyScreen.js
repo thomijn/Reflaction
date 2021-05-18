@@ -10,6 +10,7 @@ import useCollectionData from '../../hooks/useCollectionData';
 import useDocumentData from '../../hooks/useDocumentData';
 import firestore from '@react-native-firebase/firestore';
 import sitting from '../../assets/images/humaans.png';
+import YourBuddy from '../molecules/YourBuddy';
 
 const BuddyScreen = ({navigation}) => {
   const {user} = useStore();
@@ -92,7 +93,9 @@ const BuddyScreen = ({navigation}) => {
 
   return (
     <>
-      {potentialBuddies.length > 0 && selected !== 'out' ? (
+      {latestUser?.buddy ? (
+        <YourBuddy latestUser={latestUser} />
+      ) : potentialBuddies.length > 0 && selected !== 'out' ? (
         <>
           <View
             style={{
