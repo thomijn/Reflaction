@@ -15,7 +15,7 @@ const ChatScreen = () => {
 
   console.log(messagesDoc?.messages);
 
-  const onSend = useCallback((messages = []) => {
+  const onSend = (messages) => {
     console.log(messages);
 
     firestore()
@@ -23,8 +23,9 @@ const ChatScreen = () => {
       .doc(latestUser?.buddyChat)
       .update({
         messages: rnfirebase.firestore.FieldValue.arrayUnion({...messages[0]}),
-      });
-  }, []);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return messagesDoc?.messages.length ? (
     <GiftedChat
