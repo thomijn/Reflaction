@@ -1,56 +1,50 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { GiftedChat } from 'react-native-gifted-chat'
-import { StyleSheet, TextInput, View, LogBox, Button, Text } from 'react-native'
-import useCollectionData from '../../hooks/useCollectionData';
- 
+import React, {useEffect, useCallback} from 'react';
+import {GiftedChat} from 'react-native-gifted-chat';
+import firestore from '@react-native-firebase/firestore';
+import rnfirebase from '@react-native-firebase/app';
+
+import useDocumentData from '../../hooks/useDocumentData';
+import {useStore} from '../../store';
+
 const ChatScreen = () => {
-    const [messages, setMessages] = useState([]);
+  const {user} = useStore();
+  const [latestUser] = useDocumentData(`users/${user.uid}`);
+  const [messagesDoc, loading] = useDocumentData(
+    `chats/${latestUser?.buddyChat}`,
+  );
 
-    // const [messagesDb, setMessagesDb] = useState([])
+  console.log(messagesDoc?.messages);
 
-    // useEffect(()=>{
-    //     const messagesDb = []
-    //     db.collection('chats').get()
-    //         .then(snapshot => {
-    //             snapshot.docs.forEach(messageDb => {
-    //                 let currentID = messageDb.id
-    //                 let appObj = { ...messageDb.data(), ['id']: currentID }
-    //                 messagesDb.push(appObj)
+  const onSend = useCallback((messages = []) => {
+    console.log(messages);
 
-    //                 messagesDb.push(messageDb.data())
-    //         })
-    //         setMessagesDb(messagesDb)
-    //     })
-    // },[])
+    firestore()
+      .collection('chats')
+      .doc(latestUser?.buddyChat)
+      .update({
+        messages: rnfirebase.firestore.FieldValue.arrayUnion({...messages[0]}),
+      });
+  }, []);
 
-    useEffect(() => {
-        setMessages([
-        {
-            _id: 1,
-            text: 'Yo yo gasten',
-            createdAt: new Date(),
-            user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-            },
-        },
-        ])
-    }, [])
+  return messagesDoc?.messages.length ? (
+    <GiftedChat
+      messages={messagesDoc?.messages.map((message) => {
+        return {...message, createdAt: message.createdAt.toDate()};
+      })}
+      onSend={(messages) => onSend(messages)}
+      user={{
+        _id: user.uid,
+      }}
+    />
+  ) : (
+    <GiftedChat
+      messages={[]}
+      onSend={(messages) => onSend(messages)}
+      user={{
+        _id: user.uid,
+      }}
+    />
+  );
+};
 
-    const onSend = useCallback((messages = []) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-    }, [])
-
-    return (
-        <GiftedChat
-        messages={messages}
-        onSend={messages => onSend(messages)}
-        user={{
-            _id: 1,
-        }}
-        />
-    )
-}
-
-export default ChatScreen
+export default ChatScreen;

@@ -25,20 +25,22 @@ const BuddyScreen = ({navigation}) => {
 
   const [latestUser, loading] = useDocumentData(`users/${user.uid}`);
 
-  const checkIfLikedorDisliked = (like) => {
+  const checkIfLikedorDisliked = async (like) => {
     if (
       potentialBuddies[selected].likes &&
       potentialBuddies[selected]?.likes.includes(user.uid)
     ) {
+      const res = await firestore().collection('chats').add({messages: []});
+
       firestore()
         .collection('users')
         .doc(user.uid)
-        .update({buddy: potentialBuddies[selected].id})
+        .update({buddy: potentialBuddies[selected].id, buddyChat: res.id})
         .then(() => {
           firestore()
             .collection('users')
             .doc(potentialBuddies[selected].id)
-            .update({buddy: user.uid});
+            .update({buddy: user.uid, buddyChat: res.id});
         });
     } else {
       like
