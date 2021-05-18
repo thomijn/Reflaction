@@ -10,6 +10,7 @@ import HomeScreen from './components/screens/HomeScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import SignUpForm from './components/screens/SignUpForm';
 import BuddyScreen from './components/screens/BuddyScreen';
+import ChatScreen from './components/screens/ChatScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -60,6 +61,8 @@ const Root = () => {
               iconName = 'users';
             } else if (route.name === 'Challenges') {
               iconName = 'flag';
+            } else if (route.name === 'Chat') {
+              iconName = 'message-circle';
             }
 
             return <Icon name={iconName} size={size} color={color} />;
@@ -72,6 +75,7 @@ const Root = () => {
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Buddy" component={BuddyScreen} />
         <Tab.Screen name="Challenges" component={BuddyScreen} />
+        <Tab.Screen name="Chat" component={ChatScreen} />
       </Tab.Navigator>
     </>
   );
