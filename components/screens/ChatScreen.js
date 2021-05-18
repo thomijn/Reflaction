@@ -44,6 +44,7 @@ const ChatScreen = () => {
       onSend={(messages) => onSend(messages)}
       user={{
         _id: user.uid,
+        avatar: latestUser?.userImage,
       }}
     />
   ) : (
@@ -53,6 +54,7 @@ const ChatScreen = () => {
       onSend={(messages) => onSend(messages)}
       user={{
         _id: user.uid,
+        avatar: latestUser?.userImage,
       }}
     />
   );
