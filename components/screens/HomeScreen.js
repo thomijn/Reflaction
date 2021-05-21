@@ -1,17 +1,18 @@
 import React from 'react';
-import {View, Image} from 'react-native';
-import {Container} from '../atoms/Container';
-import {Header, Text} from '../atoms/Texts';
-import {useStore} from '../../store';
-import {Button} from '../atoms/Buttons';
+import { View, Image, FlatList, ScrollView } from 'react-native';
+import { Container } from '../atoms/Container';
+import { Header, Text } from '../atoms/Texts';
+import { useStore } from '../../store';
+import { Button } from '../atoms/Buttons';
 import sitting from '../../assets/images/humaans.png';
 import TopHeader from '../molecules/TopHeader';
+import ChallengeCard from '../molecules/ChallengeCard'
 
-const HomeScreen = ({navigation}) => {
-  const {user} = useStore();
+const HomeScreen = ({ navigation }) => {
+  const { user } = useStore();
 
   return (
-    <Container background="#fff" style={{padding: 20}}>
+    <Container background="#fff" style={{ padding: 20 }}>
       <TopHeader navigation={navigation} />
       {!user?.buddy ? (
         <View
@@ -22,10 +23,10 @@ const HomeScreen = ({navigation}) => {
             direction: 'column',
             justifyContent: 'center',
           }}>
-          <Header style={{marginTop: 20}} color="#000">
+          <Header style={{ marginTop: 20 }} color="#000">
             Hey {user?.firstName || 'Gebruiker'}!
           </Header>
-          <Text style={{fontSize: 20, textAlign: 'center'}} color="#000">
+          <Text style={{ fontSize: 20, textAlign: 'center' }} color="#000">
             Voordat we kunnen beginnen moeten we eerst een buddy vinden
           </Text>
           <Button
@@ -45,7 +46,14 @@ const HomeScreen = ({navigation}) => {
           />
         </View>
       ) : (
-        <Text color="#000">je hebt al een buddy</Text>
+        <ScrollView>
+          <Header color={'#FFA62B'}>Challenges</Header>
+          <ChallengeCard active={true} header={'Wandelen'} body={'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
+          <ChallengeCard active={false} header={'Nordic walking'} body={'Lekker nordic walken om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
+          <ChallengeCard active={false} header={'Line dancen'} body={'Lekker line dancen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
+          <Header color={'#FFA62B'}>Challenges</Header>
+        </ScrollView>
+
       )}
     </Container>
   );
