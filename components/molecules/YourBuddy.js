@@ -12,7 +12,7 @@ const YourBuddy = ({ navigation, latestUser }) => {
   return (
     <Container background="#fff" style={{ padding: 20 }}>
       <TopHeader navigation={navigation} />
-      <Header style={{ marginTop: 20, marginBottom: 20 }} color="#FFA62B">Je buddy is:</Header>
+      <Header style={{ marginTop: 20 }} color="#FFA62B">Je buddy is:</Header>
       <ShadowCard>
         <Image
           style={{ width: 40, height: 40, borderRadius: 50, marginRight: 10 }}

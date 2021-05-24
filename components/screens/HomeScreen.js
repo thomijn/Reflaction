@@ -9,13 +9,16 @@ import TopHeader from '../molecules/TopHeader';
 import ChallengeCard from '../molecules/ChallengeCard';
 import ShadowCard from '../atoms/ShadowCard';
 import Leaderboard from '../molecules/Leaderboard';
+import YourBuddy from '../molecules/YourBuddy';
 
 const HomeScreen = ({ navigation }) => {
   const { user } = useStore();
 
   return (
-    <Container background="#fff" style={{ padding: 20 }}>
-      <TopHeader navigation={navigation} />
+    <Container background="#fff">
+      <View style={{ padding: 20 }}>
+        <TopHeader navigation={navigation} />
+      </View>
       {!user?.buddy ? (
         <View
           style={{
@@ -49,15 +52,15 @@ const HomeScreen = ({ navigation }) => {
           />
         </View>
       ) : (
-        <ScrollView>
+        <ScrollView style={{ margin: 20 }}>
           <Leaderboard />
-          {/* <Header color={'#FFA62B'}>Challenges</Header>
-          <ChallengeCard active={true} header={'Wandelen'} body={'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
-          <ChallengeCard active={false} header={'Nordic walking'} body={'Lekker nordic walken om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
-          <ChallengeCard active={false} header={'Line dancen'} body={'Lekker line dancen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
-          <Header color={'#FFA62B'}>Challenges</Header> */}
+          <Header color={'#FFA62B'} style={{ marginTop: 20 }}>Challenges</Header>
+          <Container style={{ marginBottom: 20 }}>
+            <ChallengeCard active={true} header={'Wandelen'} body={'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
+            <ChallengeCard active={false} header={'Nordic walking'} body={'Lekker nordic walken om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
+            <ChallengeCard active={false} header={'Line dancen'} body={'Lekker line dancen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
+          </Container>
         </ScrollView>
-
       )}
     </Container>
   );

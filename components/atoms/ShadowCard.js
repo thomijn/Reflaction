@@ -1,14 +1,13 @@
 import React from 'react';
 import { Container } from '../atoms/Container';
 
-const ShadowCard = ({ active, children, display }) => {
+const ShadowCard = ({ active, children, direction, color }) => {
 
     return (
         <Container style={{
-            display: display,
-            justifyContent: 'center',
-            flexDirection: 'row',
-            backgroundColor: active ? '#FFA62B' : '#FFF',
+            display: 'flex',
+            flexDirection: direction,
+            backgroundColor: color || '#FFF',
             flexShrink: 1,
             width: '100%',
             height: 'auto',
