@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container} from '../atoms/Container';
+import {Header} from '../atoms/Texts';
 import ChallengeCard from '../molecules/ChallengeCard';
 import TopHeader from '../molecules/TopHeader';
 
@@ -8,6 +9,7 @@ const ChallengesScreen = ({navigation}) => {
     <>
       <Container background="#fff" style={{padding: 20}}>
         <TopHeader navigation={navigation} />
+        <Header style={{marginTop: 20}}>Challenges</Header>
         <ChallengeCard
           active={true}
           header={'Wandelen'}

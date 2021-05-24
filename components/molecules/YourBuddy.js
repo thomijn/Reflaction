@@ -13,15 +13,17 @@ const YourBuddy = ({navigation, latestUser}) => {
   return (
     <Container background="#fff" style={{padding: 20}}>
       <TopHeader navigation={navigation} />
+      <Header style={{marginTop: 20}}>Je huidige buddy is</Header>
       <ShadowCard>
-        <Header color="#FFA62B">Je huidige buddy is</Header>
-        <Image
-          style={{width: 40, height: 40, borderRadius: 50, marginRight: 10}}
-          source={{uri: buddy?.userImage}}
-        />
-        <Header color="#FFA62B">{buddy?.firstName}</Header>
+        <View style={{flexDirection: 'row'}}>
+          <Image
+            style={{width: 40, height: 40, borderRadius: 50, marginRight: 10}}
+            source={{uri: buddy?.userImage}}
+          />
+          <Header color="#FFA62B">{buddy?.firstName}</Header>
+        </View>
       </ShadowCard>
-      <Button text={`Bericht ${buddy?.firstName}`} />
+      <Button text={`Stuur een bericht naar ${buddy?.firstName}`} />
     </Container>
   );
 };
