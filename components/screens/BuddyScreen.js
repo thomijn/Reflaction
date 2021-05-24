@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image } from 'react-native';
-import { Container } from '../atoms/Container';
-import { Header, Text } from '../atoms/Texts';
-import { useStore } from '../../store';
+import React, {useState, useEffect} from 'react';
+import {View, Image} from 'react-native';
+import {Container} from '../atoms/Container';
+import {Header, Text} from '../atoms/Texts';
+import {useStore} from '../../store';
 import Icon from 'react-native-vector-icons/Feather';
-import { theme } from '../../App';
-import { Button } from '../atoms/Buttons';
+import {theme} from '../../App';
+import {Button} from '../atoms/Buttons';
 import useCollectionData from '../../hooks/useCollectionData';
 import useDocumentData from '../../hooks/useDocumentData';
 import firestore from '@react-native-firebase/firestore';
 import sitting from '../../assets/images/humaans.png';
 import YourBuddy from '../molecules/YourBuddy';
+import Match from '../molecules/Match';
 
-const BuddyScreen = ({ navigation }) => {
-  const { user } = useStore();
+const BuddyScreen = ({navigation}) => {
+  const {user} = useStore();
   const [selected] = useState(0);
+  const [match, setMatch] = useState(false);
   const [potentialBuddies, setPotentialBuddies] = useState(0);
   const [potentialBuddiesDatabase] = useCollectionData('users', {
     where: [
@@ -30,17 +32,18 @@ const BuddyScreen = ({ navigation }) => {
       potentialBuddies[selected].likes &&
       potentialBuddies[selected]?.likes.includes(user.uid)
     ) {
-      const res = await firestore().collection('chats').add({ messages: [] });
+      const res = await firestore().collection('chats').add({messages: []});
 
       firestore()
         .collection('users')
         .doc(user.uid)
-        .update({ buddy: potentialBuddies[selected].id, buddyChat: res.id })
+        .update({buddy: potentialBuddies[selected].id, buddyChat: res.id})
         .then(() => {
+          setMatch(true);
           firestore()
             .collection('users')
             .doc(potentialBuddies[selected].id)
-            .update({ buddy: user.uid, buddyChat: res.id });
+            .update({buddy: user.uid, buddyChat: res.id});
         });
     } else {
       like
@@ -91,10 +94,9 @@ const BuddyScreen = ({ navigation }) => {
     }
   }, [latestUser, potentialBuddiesDatabase]);
 
-  console.log(potentialBuddies[selected]);
-
   return (
     <>
+      {match && <Match setMatch={setMatch} latestUser={latestUser} />}
       {latestUser?.buddy ? (
         <YourBuddy latestUser={latestUser} />
       ) : potentialBuddies.length > 0 && selected !== 'out' ? (
@@ -106,7 +108,7 @@ const BuddyScreen = ({ navigation }) => {
               height: 400,
             }}>
             <Image
-              source={{ uri: potentialBuddies[selected]?.userImage }}
+              source={{uri: potentialBuddies[selected]?.userImage}}
               style={{
                 width: '100%',
                 height: '100%',
@@ -115,14 +117,14 @@ const BuddyScreen = ({ navigation }) => {
               }}
             />
             <View
-              style={{ position: 'absolute', zIndex: 5, bottom: 30, left: 20 }}>
-              <Text color="#fff" style={{ fontWeight: 'bold', fontSize: 35 }}>
+              style={{position: 'absolute', zIndex: 5, bottom: 30, left: 20}}>
+              <Text color="#fff" style={{fontWeight: 'bold', fontSize: 35}}>
                 {potentialBuddies[selected].firstName},{' '}
                 {potentialBuddies[selected]?.age}
               </Text>
             </View>
           </View>
-          <Container background="#fff" style={{ padding: 20 }}>
+          <Container background="#fff" style={{padding: 20}}>
             <View
               style={{
                 display: 'flex',
@@ -134,9 +136,9 @@ const BuddyScreen = ({ navigation }) => {
                 name="info"
                 color="#2B2D42"
                 size={25}
-                style={{ marginRight: 10 }}
+                style={{marginRight: 10}}
               />
-              <Text style={{ fontSize: 16 }} color="#2B2D42">
+              <Text style={{fontSize: 16}} color="#2B2D42">
                 {potentialBuddies[selected].preferences.activity[0]},{' '}
                 {potentialBuddies[selected]?.preferences.activity[1]},{' '}
                 {potentialBuddies[selected].preferences.activity[2]}
@@ -152,9 +154,9 @@ const BuddyScreen = ({ navigation }) => {
                 name="link"
                 color="#2B2D42"
                 size={25}
-                style={{ marginRight: 10 }}
+                style={{marginRight: 10}}
               />
-              <Text style={{ fontSize: 16 }} color="#2B2D42">
+              <Text style={{fontSize: 16}} color="#2B2D42">
                 Match 70%
               </Text>
             </View>
@@ -166,8 +168,8 @@ const BuddyScreen = ({ navigation }) => {
                 alignItems: 'center',
                 justifyContent: 'flex-end',
               }}>
-              <View style={{ display: 'flex', flexDirection: 'column' }}>
-                <Header style={{ marginBottom: 10 }} color={theme.colors.orange}>
+              <View style={{display: 'flex', flexDirection: 'column'}}>
+                <Header style={{marginBottom: 10}} color={theme.colors.orange}>
                   Zullen wij buddies worden?
                 </Header>
                 <View
@@ -226,10 +228,10 @@ const BuddyScreen = ({ navigation }) => {
               justifyContent: 'center',
               padding: 20,
             }}>
-            <Header style={{ marginTop: 20 }} color="#000">
+            <Header style={{marginTop: 20}} color="#000">
               Helaas!
             </Header>
-            <Text style={{ fontSize: 20, textAlign: 'center' }} color="#000">
+            <Text style={{fontSize: 20, textAlign: 'center'}} color="#000">
               Er zijn op dit moment geen potentiële buddies meer
             </Text>
             <Image

@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Image, FlatList, ScrollView } from 'react-native';
-import { Container } from '../atoms/Container';
-import { Header, Text } from '../atoms/Texts';
-import { useStore } from '../../store';
-import { Button } from '../atoms/Buttons';
+import {View, Image, FlatList, ScrollView} from 'react-native';
+import {Container} from '../atoms/Container';
+import {Header, Text} from '../atoms/Texts';
+import {useStore} from '../../store';
+import {Button} from '../atoms/Buttons';
 import sitting from '../../assets/images/humaans.png';
 import TopHeader from '../molecules/TopHeader';
 import ChallengeCard from '../molecules/ChallengeCard';
@@ -11,14 +11,12 @@ import ShadowCard from '../atoms/ShadowCard';
 import Leaderboard from '../molecules/Leaderboard';
 import YourBuddy from '../molecules/YourBuddy';
 
-const HomeScreen = ({ navigation }) => {
-  const { user } = useStore();
+const HomeScreen = ({navigation}) => {
+  const {user} = useStore();
 
   return (
-    <Container background="#fff">
-      <View style={{ padding: 20 }}>
-        <TopHeader navigation={navigation} />
-      </View>
+    <Container background="#fff" style={{padding: 20}}>
+      <TopHeader navigation={navigation} />
       {!user?.buddy ? (
         <View
           style={{
@@ -27,12 +25,12 @@ const HomeScreen = ({ navigation }) => {
             alignItems: 'center',
             direction: 'column',
             justifyContent: 'center',
-            padding: 20
+            padding: 20,
           }}>
-          <Header style={{ marginTop: 20 }} color="#000">
+          <Header style={{marginTop: 20}} color="#000">
             Hey {user?.firstName || 'Gebruiker'}!
           </Header>
-          <Text style={{ fontSize: 20, textAlign: 'center' }} color="#000">
+          <Text style={{fontSize: 20, textAlign: 'center'}} color="#000">
             Voordat we kunnen beginnen moeten we eerst een buddy vinden
           </Text>
           <Button
@@ -52,15 +50,39 @@ const HomeScreen = ({ navigation }) => {
           />
         </View>
       ) : (
-        <ScrollView style={{ margin: 20 }}>
+        <View>
+          <Header style={{marginTop: 20}}>Hey {user.firstName}!</Header>
+          <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+            Actieve Challenge
+          </Header>
+          <ChallengeCard
+            active={true}
+            header={'Wandelen'}
+            body={
+              'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'
+            }
+          />
+          <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+            Laatse bericht
+          </Header>
+          <ShadowCard>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 50,
+                  marginRight: 10,
+                }}
+                source={{uri: user?.userImage}}
+              />
+              <Text style={{marginRight: 10}} color={'#FFA62B'}>
+                Hey, wanneer gaan we Wandelen?
+              </Text>
+            </View>
+          </ShadowCard>
           <Leaderboard />
-          <Header color={'#FFA62B'} style={{ marginTop: 20 }}>Challenges</Header>
-          <Container style={{ marginBottom: 20 }}>
-            <ChallengeCard active={true} header={'Wandelen'} body={'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
-            <ChallengeCard active={false} header={'Nordic walking'} body={'Lekker nordic walken om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
-            <ChallengeCard active={false} header={'Line dancen'} body={'Lekker line dancen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
-          </Container>
-        </ScrollView>
+        </View>
       )}
     </Container>
   );
