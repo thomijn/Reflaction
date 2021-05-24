@@ -6,7 +6,9 @@ import { useStore } from '../../store';
 import { Button } from '../atoms/Buttons';
 import sitting from '../../assets/images/humaans.png';
 import TopHeader from '../molecules/TopHeader';
-import ChallengeCard from '../molecules/ChallengeCard'
+import ChallengeCard from '../molecules/ChallengeCard';
+import ShadowCard from '../atoms/ShadowCard';
+import Leaderboard from '../molecules/Leaderboard';
 
 const HomeScreen = ({ navigation }) => {
   const { user } = useStore();
@@ -22,6 +24,7 @@ const HomeScreen = ({ navigation }) => {
             alignItems: 'center',
             direction: 'column',
             justifyContent: 'center',
+            padding: 20
           }}>
           <Header style={{ marginTop: 20 }} color="#000">
             Hey {user?.firstName || 'Gebruiker'}!
@@ -47,11 +50,12 @@ const HomeScreen = ({ navigation }) => {
         </View>
       ) : (
         <ScrollView>
-          <Header color={'#FFA62B'}>Challenges</Header>
+          <Leaderboard />
+          {/* <Header color={'#FFA62B'}>Challenges</Header>
           <ChallengeCard active={true} header={'Wandelen'} body={'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
           <ChallengeCard active={false} header={'Nordic walking'} body={'Lekker nordic walken om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
           <ChallengeCard active={false} header={'Line dancen'} body={'Lekker line dancen om gezonder te worden. De wereld begint op het einde van je comfort zone'} />
-          <Header color={'#FFA62B'}>Challenges</Header>
+          <Header color={'#FFA62B'}>Challenges</Header> */}
         </ScrollView>
 
       )}
