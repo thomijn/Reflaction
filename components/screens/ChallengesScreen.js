@@ -25,17 +25,13 @@ const ChallengesScreen = ({navigation}) => {
         </Header>
         <ChallengeCard
           active={false}
-          header={'Nordic walking'}
-          body={
-            'Lekker nordic walken om gezonder te worden. De wereld begint op het einde van je comfort zone'
-          }
+          header={'Gezonde maaltijd koken'}
+          body={'Bereid een gezonde maaltijd volgens het gegeven recept'}
         />
         <ChallengeCard
           active={false}
-          header={'Line dancen'}
-          body={
-            'Lekker line dancen om gezonder te worden. De wereld begint op het einde van je comfort zone'
-          }
+          header={'Fietstocht'}
+          body={'Ontdek je omgeving op een sportieve en leuke manier'}
         />
       </Container>
     </>

@@ -25,7 +25,7 @@ const ChatsScreen = ({navigation}) => {
   const [selectedChat, setSelectedChat] = useState(null);
 
   return selectedChat ? (
-    <ChatScreen setSelectedChat={setSelectedChat} />
+    <ChatScreen selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
   ) : (
     <Container background="#fff" style={{padding: 20}}>
       <TopHeader />
@@ -33,7 +33,7 @@ const ChatsScreen = ({navigation}) => {
       <List>
         <ListItem
           onPress={() => {
-            setSelectedChat(latestUser?.buddyChat);
+            setSelectedChat(buddy);
           }}
           avatar>
           <Left>
@@ -42,33 +42,34 @@ const ChatsScreen = ({navigation}) => {
           <Body>
             <Text>{buddy?.firstName}</Text>
             <Text note>
-              {chat?.messages.length ? chat?.messages[0].text : ''}
+              {chat?.messages.length &&
+              chat?.messages[chat?.messages.length - 1].user._id === user.uid
+                ? 'Jij: '
+                : ''}
+              {chat?.messages.length
+                ? chat?.messages[chat?.messages.length - 1].text
+                : ''}
             </Text>
           </Body>
           <Right>
             <Text note>
-              {chat?.messages.length ? chat?.messages[0].text : ''}
+              {chat?.messages.length
+                ? chat?.messages[chat?.messages.length - 1].createdAt
+                    .toDate()
+                    .toLocaleTimeString()
+                : ''}
             </Text>
           </Right>
         </ListItem>
-        <ListItem onClick={() => setSelectedChat(latestUser?.buddyChat)} avatar>
+        <ListItem onClick={() => setSelectedChat(buddy)} avatar>
           <Left>
             <Thumbnail small source={icon} />
           </Left>
           <Body>
-            <Text>Virtuele huisarts</Text>
-            <Text note>
-              {chat?.messages.length
-                ? chat?.messages[0].text
-                : 'Begin het gesprek met je virtuele huisarts'}
-            </Text>
+            <Text>Virtuele huisarts (bot)</Text>
+            <Text note>Begin het gesprek met je virtuele huisarts</Text>
           </Body>
-          <Right>
-            <Text note>
-              {' '}
-              {chat?.messages.length ? chat?.messages[0].text : ''}
-            </Text>
-          </Right>
+          <Right></Right>
         </ListItem>
       </List>
     </Container>

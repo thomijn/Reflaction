@@ -35,7 +35,7 @@ const YourBuddy = ({navigation, latestUser}) => {
         </View>
         <View style={{flexDirection: 'row', marginTop: 5}}>
           {buddy?.preferences.activity.map((activity) => (
-            <Text style={{marginRight: 5}} color="#000">
+            <Text key={activity} style={{marginRight: 5}} color="#000">
               {activity}
             </Text>
           ))}

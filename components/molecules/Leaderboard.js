@@ -9,21 +9,9 @@ const Leaderboard = ({active, body, header}) => {
   const leaders = [
     {
       position: '1',
-      name: 'John',
+      name: 'Willem en Varun',
       image: '../../assets/images/Icoon-oranje.png',
       points: 30,
-    },
-    {
-      position: '2',
-      name: 'Leendert',
-      image: '../../assets/images/Icoon-oranje.png',
-      points: 20,
-    },
-    {
-      position: '3',
-      name: 'Irene',
-      image: '../../assets/images/Icoon-oranje.png',
-      points: 10,
     },
   ];
 
@@ -34,29 +22,35 @@ const Leaderboard = ({active, body, header}) => {
       <Header style={{marginTop: 20, fontSize: 20}} color="#FFA62B">
         Leaderboard
       </Header>
-      {leaders.map((leader) => {
-        return (
-          <ShadowCard direction={'row'}>
-            <Text style={{marginRight: 10}} color={'#FFA62B'}>
-              {leader.position}
-            </Text>
-            <Image
-              source={icon}
+      <ShadowCard
+        style={{
+          flexDirection: 'column',
+          // flex: 1,
+          // flexWrap: 'wrap',
+        }}
+        direction={'row'}>
+        {leaders.map((leader, index) => {
+          return (
+            <View
+              key={index}
               style={{
-                width: 30,
-                height: 30,
-                borderRadius: 50,
-                marginRight: 20,
-                backgroundColor: '#fff',
-              }}
-            />
-            <Text style={{marginRight: 'auto'}} color={'#000'}>
-              {leader.name}
-            </Text>
-            <Text color={'#FFA62B'}>{leader.points}</Text>
-          </ShadowCard>
-        );
-      })}
+                width: '100%',
+                alignSelf: 'stretch',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                flex: 1,
+              }}>
+              <Text style={{marginRight: 10}} color={'#FFA62B'}>
+                {leader.position}
+              </Text>
+              <Text style={{marginRight: 'auto'}} color={'#000'}>
+                {leader.name}
+              </Text>
+              <Text color={'#FFA62B'}>{leader.points}</Text>
+            </View>
+          );
+        })}
+      </ShadowCard>
     </View>
   );
 };

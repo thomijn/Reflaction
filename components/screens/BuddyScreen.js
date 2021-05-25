@@ -94,6 +94,8 @@ const BuddyScreen = ({navigation}) => {
     }
   }, [latestUser, potentialBuddiesDatabase]);
 
+  console.log(potentialBuddies[selected]);
+
   return (
     <>
       {match && <Match setMatch={setMatch} latestUser={latestUser} />}

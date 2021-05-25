@@ -9,15 +9,16 @@ import TopHeader from '../molecules/TopHeader';
 import ChallengeCard from '../molecules/ChallengeCard';
 import ShadowCard from '../atoms/ShadowCard';
 import Leaderboard from '../molecules/Leaderboard';
-import YourBuddy from '../molecules/YourBuddy';
+import useDocumentData from '../../hooks/useDocumentData';
 
 const HomeScreen = ({navigation}) => {
   const {user} = useStore();
+  const [latestUser, loading] = useDocumentData(`users/${user.uid}`);
 
   return (
     <Container background="#fff" style={{padding: 20}}>
       <TopHeader navigation={navigation} />
-      {!user?.buddy ? (
+      {!latestUser?.buddy ? (
         <View
           style={{
             display: 'flex',

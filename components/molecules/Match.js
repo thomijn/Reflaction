@@ -27,7 +27,7 @@ const Match = ({latestUser, setMatch}) => {
           borderRadius: 8,
         }}>
         <Button
-          onClick={() => setMatch(false)}
+          onPress={() => setMatch(false)}
           transparent
           style={{position: 'absolute', zIndex: 12, right: 0}}
           light>
@@ -61,7 +61,7 @@ const Match = ({latestUser, setMatch}) => {
         </CardItem>
         <CardItem
           style={{borderBottomLeftRadius: 8, borderBottomRightRadius: 8}}>
-          <Text color="#000">Emre is je niewe buddy!</Text>
+          <Text color="#000">{buddy?.firstName} is je niewe buddy!</Text>
         </CardItem>
       </Card>
     </View>

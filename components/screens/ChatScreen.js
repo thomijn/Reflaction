@@ -1,5 +1,5 @@
 import React from 'react';
-import {GiftedChat} from 'react-native-gifted-chat';
+import {GiftedChat, Bubble} from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
 import rnfirebase from '@react-native-firebase/app';
 import {Header, Left, Button, Icon, Title, Body, Right} from 'native-base';
@@ -8,14 +8,14 @@ import useDocumentData from '../../hooks/useDocumentData';
 import {useStore} from '../../store';
 import {theme} from '../../App';
 
-const ChatScreen = ({setSelectedChat}) => {
+const ChatScreen = ({setSelectedChat, selectedChat}) => {
   const {user} = useStore();
   const [latestUser] = useDocumentData(`users/${user.uid}`);
   const [messagesDoc, loading] = useDocumentData(
     `chats/${latestUser?.buddyChat}`,
   );
 
-  console.log(messagesDoc?.messages);
+  console.log(selectedChat);
 
   const onSend = (messages) => {
     console.log(messages);
@@ -41,15 +41,29 @@ const ChatScreen = ({setSelectedChat}) => {
 
   return messagesDoc?.messages.length ? (
     <>
-      <Header androidStatusBarColor="red" style={{backgroundColor: '#fff'}}>
+      <Header transparent androidStatusBarColor={theme.colors.orange}>
         <Left>
-          <Button transparent>
-            <Icon name="arrow-back" />
+          <Button onPress={() => setSelectedChat(null)} transparent>
+            <Icon style={{color: '#000'}} name="arrow-back" />
           </Button>
         </Left>
-        <Title>Chat</Title>
+        <Body>
+          <Title style={{color: '#000'}}>
+            {selectedChat.firstName} {selectedChat.lastName}
+          </Title>
+        </Body>
       </Header>
       <GiftedChat
+        renderBubble={(props) => (
+          <Bubble
+            {...props}
+            wrapperStyle={{
+              right: {
+                backgroundColor: theme.colors.orange,
+              },
+            }}
+          />
+        )}
         inverted
         messages={getMessage()}
         onSend={(messages) => onSend(messages)}
@@ -68,7 +82,9 @@ const ChatScreen = ({setSelectedChat}) => {
           </Button>
         </Left>
         <Body>
-          <Title style={{color: '#000'}}>Chat</Title>
+          <Title style={{color: '#000'}}>
+            {selectedChat.firstName} {selectedChat.lastName}
+          </Title>
         </Body>
         <Right></Right>
       </Header>
