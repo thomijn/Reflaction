@@ -98,7 +98,7 @@ const BuddyScreen = ({navigation}) => {
     <>
       {match && <Match setMatch={setMatch} latestUser={latestUser} />}
       {latestUser?.buddy ? (
-        <YourBuddy latestUser={latestUser} />
+        <YourBuddy navigation={navigation} latestUser={latestUser} />
       ) : potentialBuddies.length > 0 && selected !== 'out' ? (
         <>
           <View

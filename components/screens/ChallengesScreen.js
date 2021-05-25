@@ -10,6 +10,9 @@ const ChallengesScreen = ({navigation}) => {
       <Container background="#fff" style={{padding: 20}}>
         <TopHeader navigation={navigation} />
         <Header style={{marginTop: 20}}>Challenges</Header>
+        <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+          Actieve Challenge
+        </Header>
         <ChallengeCard
           active={true}
           header={'Wandelen'}
@@ -17,6 +20,9 @@ const ChallengesScreen = ({navigation}) => {
             'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'
           }
         />
+        <Header color={'#000'} style={{marginTop: 20, fontSize: 20}}>
+          Open Challenges
+        </Header>
         <ChallengeCard
           active={false}
           header={'Nordic walking'}
