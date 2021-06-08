@@ -8,12 +8,12 @@ import useDocumentData from '../../hooks/useDocumentData';
 import { useStore } from '../../store';
 import { theme } from '../../App';
 
-const ChatScreen = ({ setSelectedChat, selectedChat }) => {
+const GroupChatScreen = ({ setSelectedChat, selectedChat }) => {
   console.log(selectedChat);
   const { user } = useStore();
   const [latestUser] = useDocumentData(`users/${user.uid}`);
   const [messagesDoc, loading] = useDocumentData(
-    `chats/${latestUser?.buddyChat}`,
+    `chats/${latestUser?.chats}`,
   );
 
   const onSend = (messages) => {
@@ -21,7 +21,7 @@ const ChatScreen = ({ setSelectedChat, selectedChat }) => {
 
     firestore()
       .collection('chats')
-      .doc(latestUser?.buddyChat)
+      .doc(latestUser?.chats[0])
       .update({
         messages: rnfirebase.firestore.FieldValue.arrayUnion({ ...messages[0] }),
       })
@@ -48,7 +48,7 @@ const ChatScreen = ({ setSelectedChat, selectedChat }) => {
         </Left>
         <Body>
           <Title style={{ color: '#000' }}>
-            {selectedChat.firstName} {selectedChat.lastName}
+            {messagesDoc.chatName}
           </Title>
         </Body>
       </Header>
@@ -100,4 +100,4 @@ const ChatScreen = ({ setSelectedChat, selectedChat }) => {
   );
 };
 
-export default ChatScreen;
+export default GroupChatScreen;
