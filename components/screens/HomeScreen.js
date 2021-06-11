@@ -1,5 +1,7 @@
-import React from 'react';
-import {View, Image, FlatList, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Image} from 'react-native';
+import Radar from 'react-native-radar';
+
 import {Container} from '../atoms/Container';
 import {Header, Text} from '../atoms/Texts';
 import {useStore} from '../../store';
@@ -14,6 +16,10 @@ import useDocumentData from '../../hooks/useDocumentData';
 const HomeScreen = ({navigation}) => {
   const {user} = useStore();
   const [latestUser, loading] = useDocumentData(`users/${user.uid}`);
+
+  useEffect(() => {
+    Radar.setUserId(user.uid);
+  }, []);
 
   return (
     <Container background="#fff" style={{padding: 20}}>

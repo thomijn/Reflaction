@@ -10,9 +10,9 @@ import HomeScreen from './components/screens/HomeScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import SignUpForm from './components/screens/SignUpForm';
 import BuddyScreen from './components/screens/BuddyScreen';
-import ChatScreen from './components/screens/ChatScreen';
 import ChallengesScreen from './components/screens/ChallengesScreen';
 import ChatsScreen from './components/screens/ChatsScreen';
+import {initRadar} from './hooks/radar';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -24,6 +24,9 @@ export const theme = {
     gray: '#f7f7f7',
   },
 };
+
+//init geofencing
+initRadar();
 
 function App() {
   return (

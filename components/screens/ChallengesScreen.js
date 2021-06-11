@@ -1,39 +1,84 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, TouchableOpacity} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+
+import useCollectionData from '../../hooks/useCollectionData';
+import useDocumentData from '../../hooks/useDocumentData';
+import {useStore} from '../../store';
 import {Container} from '../atoms/Container';
 import {Header} from '../atoms/Texts';
 import ChallengeCard from '../molecules/ChallengeCard';
 import TopHeader from '../molecules/TopHeader';
+import ChallengeScreen from './ChallengeScreen';
 
 const ChallengesScreen = ({navigation}) => {
+  const [selectedChallenge, setSelectedChallenge] = useState();
+  const {user} = useStore();
+  const [latestUser] = useDocumentData(`users/${user.uid}`);
+  const [activeChallenge] = useDocumentData(
+    `challenges/${latestUser?.activeChallenge}`,
+  );
+  const [challenges] = useCollectionData('challenges', {
+    where: [[firestore.FieldPath.documentId(), '!=', user.activeChallenge]],
+  });
+
+  useEffect(() => {
+    fetch('https://api.radar.io/v1/geofences', {
+      method: 'GET',
+      headers: {
+        Authorization: 'prj_test_sk_85f457c13ad51394512e11a8fec4a64f30e1a6d0',
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <>
-      <Container background="#fff" style={{padding: 20}}>
-        <TopHeader navigation={navigation} />
-        <Header style={{marginTop: 20}}>Challenges</Header>
-        <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
-          Actieve Challenge
-        </Header>
-        <ChallengeCard
-          active={true}
-          header={'Wandelen'}
-          body={
-            'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'
-          }
+      {selectedChallenge ? (
+        <ChallengeScreen
+          setSelectedChallenge={setSelectedChallenge}
+          challenge={selectedChallenge}
         />
-        <Header color={'#000'} style={{marginTop: 20, fontSize: 20}}>
-          Open Challenges
-        </Header>
-        <ChallengeCard
-          active={false}
-          header={'Gezonde maaltijd koken'}
-          body={'Bereid een gezonde maaltijd volgens het gegeven recept'}
-        />
-        <ChallengeCard
-          active={false}
-          header={'Fietstocht'}
-          body={'Ontdek je omgeving op een sportieve en leuke manier'}
-        />
-      </Container>
+      ) : (
+        <ScrollView>
+          <Container background="#fff" style={{padding: 20}}>
+            <TopHeader navigation={navigation} />
+            <Header style={{marginTop: 20}}>Challenges</Header>
+            {activeChallenge && (
+              <>
+                <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+                  Actieve Challenge
+                </Header>
+                <TouchableOpacity
+                  onPress={() => setSelectedChallenge(activeChallenge)}>
+                  <ChallengeCard
+                    active={true}
+                    header={activeChallenge.name}
+                    body={activeChallenge.description}
+                  />
+                </TouchableOpacity>
+              </>
+            )}
+            <Header color={'#000'} style={{marginTop: 20, fontSize: 20}}>
+              Open Challenges
+            </Header>
+            {challenges.map((challenge) => (
+              <TouchableOpacity
+                onPress={() => setSelectedChallenge(challenge)}
+                key={challenge.id}>
+                <ChallengeCard
+                  setSelectedChallenge={setSelectedChallenge}
+                  active={false}
+                  header={challenge.name}
+                  body={challenge.description}
+                />
+              </TouchableOpacity>
+            ))}
+          </Container>
+        </ScrollView>
+      )}
     </>
   );
 };

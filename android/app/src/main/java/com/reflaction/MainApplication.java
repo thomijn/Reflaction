@@ -9,6 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import io.radar.sdk.Radar;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -46,7 +47,8 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
-  }
+    Radar.initialize(this, "prj_test_pk_ae93c9ec6ca8b57206a0cd1c83145a03588b12a4");
+ }
 
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like
