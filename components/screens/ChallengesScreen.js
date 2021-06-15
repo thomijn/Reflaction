@@ -21,6 +21,8 @@ const ChallengesScreen = ({navigation}) => {
   const [challenges] = useCollectionData('challenges', {
     where: [[firestore.FieldPath.documentId(), '!=', user.activeChallenge]],
   });
+  const [geofenceCoords, setGeofenceCoords] = useState([0.0, 0.0]);
+  console.log(geofenceCoords);
 
   useEffect(() => {
     fetch('https://api.radar.io/v1/geofences', {
@@ -30,7 +32,9 @@ const ChallengesScreen = ({navigation}) => {
       },
     })
       .then((response) => response.json())
-      .then((json) => console.log(json))
+      .then((json) =>
+        setGeofenceCoords(json.geofences[0].geometryCenter.coordinates),
+      )
       .catch((err) => console.log(err));
   }, []);
 
@@ -38,6 +42,9 @@ const ChallengesScreen = ({navigation}) => {
     <>
       {selectedChallenge ? (
         <ChallengeScreen
+          latestUser={latestUser}
+          geofenceCoords={geofenceCoords}
+          active={selectedChallenge.id === latestUser?.activeChallenge}
           setSelectedChallenge={setSelectedChallenge}
           challenge={selectedChallenge}
         />
@@ -46,7 +53,7 @@ const ChallengesScreen = ({navigation}) => {
           <Container background="#fff" style={{padding: 20}}>
             <TopHeader navigation={navigation} />
             <Header style={{marginTop: 20}}>Challenges</Header>
-            {activeChallenge && (
+            {activeChallenge && latestUser?.activeChallenge !== 'null' && (
               <>
                 <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
                   Actieve Challenge
