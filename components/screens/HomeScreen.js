@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
-import {View, Image} from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Image } from 'react-native';
 import Radar from 'react-native-radar';
 
-import {Container} from '../atoms/Container';
-import {Header, Text} from '../atoms/Texts';
-import {useStore} from '../../store';
-import {Button} from '../atoms/Buttons';
+import { Container } from '../atoms/Container';
+import { Header, Text } from '../atoms/Texts';
+import { useStore } from '../../store';
+import { Button } from '../atoms/Buttons';
 import sitting from '../../assets/images/humaans.png';
 import TopHeader from '../molecules/TopHeader';
 import ChallengeCard from '../molecules/ChallengeCard';
@@ -13,8 +13,8 @@ import ShadowCard from '../atoms/ShadowCard';
 import Leaderboard from '../molecules/Leaderboard';
 import useDocumentData from '../../hooks/useDocumentData';
 
-const HomeScreen = ({navigation}) => {
-  const {user} = useStore();
+const HomeScreen = ({ navigation }) => {
+  const { user } = useStore();
   const [latestUser, loading] = useDocumentData(`users/${user.uid}`);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const HomeScreen = ({navigation}) => {
   }, []);
 
   return (
-    <Container background="#fff" style={{padding: 20}}>
+    <Container background="#fff" style={{ padding: 20 }}>
       <TopHeader navigation={navigation} />
       {!latestUser?.buddy ? (
         <View
@@ -34,10 +34,10 @@ const HomeScreen = ({navigation}) => {
             justifyContent: 'center',
             padding: 20,
           }}>
-          <Header style={{marginTop: 20}} color="#000">
+          <Header style={{ marginTop: 20 }} color="#000">
             Hey {user?.firstName || 'Gebruiker'}!
           </Header>
-          <Text style={{fontSize: 20, textAlign: 'center'}} color="#000">
+          <Text style={{ fontSize: 20, textAlign: 'center' }} color="#000">
             Voordat we kunnen beginnen moeten we eerst een buddy vinden
           </Text>
           <Button
@@ -58,8 +58,8 @@ const HomeScreen = ({navigation}) => {
         </View>
       ) : (
         <View>
-          <Header style={{marginTop: 20}}>Hey {user.firstName}!</Header>
-          <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+          <Header style={{ marginTop: 20 }}>Hey {user.firstName}!</Header>
+          <Header color={'#FC9A00'} style={{ marginTop: 20, fontSize: 20 }}>
             Actieve Challenge
           </Header>
           <ChallengeCard
@@ -69,11 +69,11 @@ const HomeScreen = ({navigation}) => {
               'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'
             }
           />
-          <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+          <Header color={'#FC9A00'} style={{ marginTop: 20, fontSize: 20 }}>
             Laatse bericht
           </Header>
           <ShadowCard>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image
                 style={{
                   width: 40,
@@ -81,9 +81,9 @@ const HomeScreen = ({navigation}) => {
                   borderRadius: 50,
                   marginRight: 10,
                 }}
-                source={{uri: user?.userImage}}
+                source={{ uri: user?.userImage }}
               />
-              <Text style={{marginRight: 10}} color={'#FFA62B'}>
+              <Text style={{ marginRight: 10 }} color={'#FC9A00'}>
                 Hey, wanneer gaan we Wandelen?
               </Text>
             </View>

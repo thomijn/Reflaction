@@ -1,10 +1,10 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
 
-import {ThemeProvider} from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
 import HomeScreen from './components/screens/HomeScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
@@ -12,7 +12,7 @@ import SignUpForm from './components/screens/SignUpForm';
 import BuddyScreen from './components/screens/BuddyScreen';
 import ChallengesScreen from './components/screens/ChallengesScreen';
 import ChatsScreen from './components/screens/ChatsScreen';
-import {initRadar} from './hooks/radar';
+import { initRadar } from './hooks/radar';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -20,7 +20,7 @@ const Stack = createStackNavigator();
 export const theme = {
   colors: {
     blue: '#2580e8',
-    orange: '#FFA62B',
+    orange: '#FC9A00',
     gray: '#f7f7f7',
   },
 };
@@ -34,7 +34,7 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
             name="Welcome"
             component={WelcomeScreen}
           />
@@ -56,8 +56,8 @@ const Root = () => {
   return (
     <>
       <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => {
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
             if (route.name === 'Home') {
