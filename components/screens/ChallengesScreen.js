@@ -50,7 +50,7 @@ const ChallengesScreen = ({navigation}) => {
         />
       ) : (
         <ScrollView>
-          <Container background="#fff" style={{padding: 20}}>
+          <Container background="#fff" style={{padding: 20, height: '100%'}}>
             <TopHeader navigation={navigation} />
             <Header style={{marginTop: 20}}>Challenges</Header>
             {activeChallenge && latestUser?.activeChallenge !== 'null' && (

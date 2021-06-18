@@ -108,7 +108,7 @@ const ChallengeScreen = ({
             </MapboxGL.MapView>
           </View>
         )}
-        {!active && (
+        {!active && challenge.name === 'Wandelen' && (
           <View
             style={{
               bottom: 20,
@@ -123,12 +123,47 @@ const ChallengeScreen = ({
                 firestore()
                   .collection('users')
                   .doc(user.uid)
-                  .update({activeChallenge: challenge.id})
-                  .then(() => setSelectedChallenge(false));
+                  .update({activeChallenge: challenge.id});
               }}
               margin="0px 0px 0px 0px"
               text="START CHALLENGE"
             />
+          </View>
+        )}
+        {!active && challenge.name === 'Open keuken' && (
+          <View
+            style={{
+              bottom: 20,
+              left: 20,
+              position: 'absolute',
+              width: '100%',
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}>
+            <View style={{marginLeft: 15, width: '44%'}}>
+              <Button
+                onPress={() => {
+                  firestore()
+                    .collection('users')
+                    .doc(user.uid)
+                    .update({activeChallenge: challenge.id});
+                }}
+                margin="0px 0px 0px 0px"
+                text="KOKEN"
+              />
+            </View>
+            <View style={{marginLeft: 15, width: '44%'}}>
+              <Button
+                onPress={() => {
+                  firestore()
+                    .collection('users')
+                    .doc(user.uid)
+                    .update({activeChallenge: challenge.id});
+                }}
+                margin="0px 0px 0px 0px"
+                text="AANSCHUIVEN"
+              />
+            </View>
           </View>
         )}
         {challengeComplete && (

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
 import Radar from 'react-native-radar';
 
 import {Container} from '../atoms/Container';
@@ -16,7 +16,9 @@ import useDocumentData from '../../hooks/useDocumentData';
 const HomeScreen = ({navigation}) => {
   const {user} = useStore();
   const [latestUser, loading] = useDocumentData(`users/${user.uid}`);
-
+  const [activeChallenge] = useDocumentData(
+    `challenges/${latestUser?.activeChallenge}`,
+  );
   useEffect(() => {
     Radar.setUserId(user.uid);
   }, []);
@@ -62,13 +64,24 @@ const HomeScreen = ({navigation}) => {
           <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
             Actieve Challenge
           </Header>
-          <ChallengeCard
-            active={true}
-            header={'Wandelen'}
-            body={
-              'Lekker wandelen om gezonder te worden. De wereld begint op het einde van je comfort zone'
-            }
-          />
+          {activeChallenge && latestUser?.activeChallenge !== 'null' ? (
+            <>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Challenges')}>
+                <ChallengeCard
+                  active={true}
+                  header={activeChallenge.name}
+                  body={activeChallenge.description}
+                />
+              </TouchableOpacity>
+            </>
+          ) : (
+            <TouchableOpacity onPress={() => navigation.navigate('Challenges')}>
+              <Text style={{marginTop: 10}} color="#000">
+                Je hebt nog geen actieve challenge
+              </Text>
+            </TouchableOpacity>
+          )}
           <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
             Laatse bericht
           </Header>
