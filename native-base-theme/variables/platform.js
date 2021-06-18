@@ -1,9 +1,9 @@
 // @flow
 
 import color from 'color';
-import {Platform, Dimensions, PixelRatio} from 'react-native';
+import { Platform, Dimensions, PixelRatio } from 'react-native';
 
-import {PLATFORM} from './commonColor';
+import { PLATFORM } from './commonColor';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -134,7 +134,7 @@ export default {
   checkboxTextShadowRadius: 0,
 
   // Color
-  brandPrimary: platform === PLATFORM.IOS ? '#FFA62B' : '#FFA62B',
+  brandPrimary: platform === PLATFORM.IOS ? '#FC9A00' : '#FC9A00',
   brandInfo: '#62B1F6',
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',
@@ -210,7 +210,7 @@ export default {
   toolbarDefaultBorder: platform === PLATFORM.IOS ? '#a7a6ab' : '#3F51B5',
   iosStatusbar: platform === PLATFORM.IOS ? 'dark-content' : 'light-content',
   get statusBarColor() {
-    return '#FFA62B';
+    return '#FC9A00';
   },
   get darkenHeader() {
     return color(this.tabBgColor).darken(0.03).hex();

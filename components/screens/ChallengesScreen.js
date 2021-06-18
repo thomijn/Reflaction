@@ -55,7 +55,7 @@ const ChallengesScreen = ({navigation}) => {
             <Header style={{marginTop: 20}}>Challenges</Header>
             {activeChallenge && latestUser?.activeChallenge !== 'null' && (
               <>
-                <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+                <Header color={'#FC9A00'} style={{marginTop: 20, fontSize: 20}}>
                   Actieve Challenge
                 </Header>
                 <TouchableOpacity

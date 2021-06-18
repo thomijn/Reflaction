@@ -61,7 +61,7 @@ const HomeScreen = ({navigation}) => {
       ) : (
         <View>
           <Header style={{marginTop: 20}}>Hey {user.firstName}!</Header>
-          <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+          <Header color={'#FC9A00'} style={{marginTop: 20, fontSize: 20}}>
             Actieve Challenge
           </Header>
           {activeChallenge && latestUser?.activeChallenge !== 'null' ? (
@@ -96,7 +96,7 @@ const HomeScreen = ({navigation}) => {
                 }}
                 source={{uri: user?.userImage}}
               />
-              <Text style={{marginRight: 10}} color={'#FFA62B'}>
+              <Text style={{marginRight: 10}} color={'#FC9A00'}>
                 Hey, wanneer gaan we Wandelen?
               </Text>
             </View>
