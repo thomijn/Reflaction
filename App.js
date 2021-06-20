@@ -12,6 +12,7 @@ import SignUpForm from './components/screens/SignUpForm';
 import BuddyScreen from './components/screens/BuddyScreen';
 import ChallengesScreen from './components/screens/ChallengesScreen';
 import ChatsScreen from './components/screens/ChatsScreen';
+import GroupsScreen from './components/screens/GroupsScreen';
 import { initRadar } from './hooks/radar';
 
 const Tab = createBottomTabNavigator();
@@ -68,6 +69,8 @@ const Root = () => {
               iconName = 'flag';
             } else if (route.name === 'Chat') {
               iconName = 'message-circle';
+            } else if (route.name === 'Groups') {
+              iconName = 'message-square';
             }
 
             return <Icon name={iconName} size={size} color={color} />;
@@ -81,6 +84,7 @@ const Root = () => {
         <Tab.Screen name="Buddy" component={BuddyScreen} />
         <Tab.Screen name="Challenges" component={ChallengesScreen} />
         <Tab.Screen name="Chat" component={ChatsScreen} />
+        <Tab.Screen name="Groups" component={GroupsScreen} />
       </Tab.Navigator>
     </>
   );
