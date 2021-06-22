@@ -3,14 +3,14 @@ import { Container } from '../atoms/Container';
 import { Header, Text } from '../atoms/Texts';
 import { View, Image } from 'react-native';
 import ShadowCard from '../atoms/ShadowCard';
-import icon from '../../assets/images/Icoon-oranje.png';
+import icon from '../../assets/images/010_icoon.png';
 
 const Leaderboard = ({ active, body, header }) => {
   const leaders = [
     {
       position: '1',
       name: 'Willem en Varun',
-      image: '../../assets/images/Icoon-oranje.png',
+      image: '../../assets/images/010_icoon.png',
       points: 30,
     },
   ];

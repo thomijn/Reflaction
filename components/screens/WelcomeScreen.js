@@ -1,54 +1,54 @@
-import React, {useRef} from 'react';
-import {Image, View, Animated} from 'react-native';
+import React, { useRef } from 'react';
+import { Image, View, Animated } from 'react-native';
 
-import {SwitchButton} from '../atoms/Buttons';
-import {Container} from '../atoms/Container';
+import { SwitchButton } from '../atoms/Buttons';
+import { Container } from '../atoms/Container';
 import LoginScreen from './LoginScreen';
 import RegisterScreen from './RegisterScreen';
 
 import standing1 from '../../assets/images/humaans.png';
 import standing2 from '../../assets/images/humaaan-1.png';
 import standing3 from '../../assets/images/standing-21.png';
-import logo from '../../assets/images/Logo-oranje.png';
+import logo from '../../assets/images/logo.png';
 
-const WelcomeScreen = ({navigation: {navigate}}) => {
+const WelcomeScreen = ({ navigation: { navigate } }) => {
   const fadeAnim = useRef(new Animated.Value(500)).current;
   const fadeAnimRegister = useRef(new Animated.Value(500)).current;
 
   const fadeIn = (register) => {
     !register
       ? Animated.spring(fadeAnim, {
-          toValue: 0,
-          stiffness: 90,
-          damping: 20,
-          mass: 1,
-          useNativeDriver: true,
-        }).start()
+        toValue: 0,
+        stiffness: 90,
+        damping: 20,
+        mass: 1,
+        useNativeDriver: true,
+      }).start()
       : Animated.spring(fadeAnimRegister, {
-          toValue: 0,
-          stiffness: 90,
-          damping: 20,
-          mass: 1,
-          useNativeDriver: true,
-        }).start();
+        toValue: 0,
+        stiffness: 90,
+        damping: 20,
+        mass: 1,
+        useNativeDriver: true,
+      }).start();
   };
 
   const fadeOut = (register) => {
     !register
       ? Animated.spring(fadeAnim, {
-          toValue: 500,
-          stiffness: 90,
-          damping: 20,
-          mass: 1,
-          useNativeDriver: true,
-        }).start()
+        toValue: 500,
+        stiffness: 90,
+        damping: 20,
+        mass: 1,
+        useNativeDriver: true,
+      }).start()
       : Animated.spring(fadeAnimRegister, {
-          toValue: 500,
-          stiffness: 90,
-          damping: 20,
-          mass: 1,
-          useNativeDriver: true,
-        }).start();
+        toValue: 500,
+        stiffness: 90,
+        damping: 20,
+        mass: 1,
+        useNativeDriver: true,
+      }).start();
   };
 
   return (
@@ -56,7 +56,7 @@ const WelcomeScreen = ({navigation: {navigate}}) => {
       <Container
         onPress={() => fadeOut()}
         background="#fff"
-        style={{padding: 40}}>
+        style={{ padding: 40 }}>
         <Image
           style={{
             position: 'absolute',

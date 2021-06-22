@@ -17,7 +17,7 @@ import { useStore } from '../../store';
 import ChatScreen from './ChatScreen';
 import DoctorChatScreen from './DoctorChatScreen';
 import GroupChatScreen from './GroupChatScreen';
-import icon from '../../assets/images/Icoon-oranje.png';
+import icon from '../../assets/images/010_icoon.png';
 import useCollectionData from '../../hooks/useCollectionData';
 import firestore from '@react-native-firebase/firestore';
 import senyurek from '../../assets/images/senyurek.png';
@@ -39,6 +39,8 @@ const ChatsScreen = ({ navigation }) => {
   });
   const [type, setType] = useState(null);
   const [clicked, setClicked] = useState(false);
+
+  console.log('buddy is ', buddy)
 
   return selectedChat ? (
     type === 'buddy' ? (

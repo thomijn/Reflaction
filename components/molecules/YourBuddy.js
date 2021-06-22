@@ -9,7 +9,6 @@ import { Button } from '../atoms/Buttons';
 
 const YourBuddy = ({ navigation, latestUser }) => {
   const [buddy, loading] = useDocumentData(`users/${latestUser.buddy}`);
-  console.log(buddy?.preferences.activity);
   return (
     <Container background="#fff" style={{ padding: 20 }}>
       <TopHeader navigation={navigation} />

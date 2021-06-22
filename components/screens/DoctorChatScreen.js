@@ -12,7 +12,6 @@ import { theme } from '../../App';
 const DoctorChatScreen = ({ setSelectedChat, selectedChat }) => {
     const [messages, setMessages] = useState([]);
 
-
     useEffect(() => {
         setMessages([
             {

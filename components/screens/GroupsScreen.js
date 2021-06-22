@@ -16,40 +16,61 @@ import useDocumentData from '../../hooks/useDocumentData';
 import { useStore } from '../../store';
 import ChatScreen from './ChatScreen';
 import GroupChatScreen from './GroupChatScreen';
-import icon from '../../assets/images/Icoon-oranje.png';
+import icon from '../../assets/images/010_icoon.png';
 import useCollectionData from '../../hooks/useCollectionData';
 import firestore from '@react-native-firebase/firestore';
 
 const GroupsScreen = ({ navigation }) => {
     const { user } = useStore();
-    const [latestUser] = useDocumentData(`users/${user.uid}`);
-    const [groups] = useDocumentData(`groups/aoM10ErBcJhAXqQ8wcU9`);
-    const [buddy] = useDocumentData(`users/${latestUser?.buddy}`);
-    const [buddyChat] = useDocumentData(`chats/${latestUser?.buddyChat}`);
-    const [selectedChat, setSelectedChat] = useState(null);
-    const [groupChats] = useCollectionData(`chats`, { where: [[firestore.FieldPath.documentId(), 'in', user.chats],] });
-    const [type, setType] = useState(null);
+
+    const updateGroup = (group) => {
+        firestore()
+            .collection('users')
+            .doc(user.uid)
+            .update({ group })
+            .then((docRef) => {
+                console.log("Document updated with group: ", group);
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+            });
+    }
+
+    let groups = ([
+        {
+            name: 'Tuinieren',
+            reference: 'tuinieren',
+            avatar: icon
+        },
+        {
+            name: 'Koken',
+            reference: 'koken',
+            avatar: icon
+        },
+        {
+            name: 'Sporten',
+            reference: 'sporten',
+            avatar: icon
+        }
+    ])
 
     return <Container background="#fff" style={{ padding: 20 }}>
         <TopHeader />
-        <Header style={{ marginTop: 20 }}>{groups.description}</Header>
+        <Header style={{ marginTop: 20 }}>Chats</Header>
         <List>
-            {groupChats.map(chat => <ListItem onPress={() => { setSelectedChat(buddy), setType('group') }} avatar>
-                <Left>
-                    <Thumbnail small source={icon} />
-                </Left>
-                <Body>
-                    <Text>{chat.chatName}</Text>
-                    <Text note>{chat?.messages.length &&
-                        chat?.messages[chat?.messages.length - 1].user._id === user.uid
-                        ? 'Jij: '
-                        : ''}
-                        {chat?.messages.length
-                            ? chat?.messages[chat?.messages.length - 1].text
-                            : ''}</Text>
-                </Body>
-                <Right></Right>
-            </ListItem>)}
+            {groups.map(group => {
+                return <ListItem onPress={() => { updateGroup(group.reference) }} avatar>
+                    <Left>
+                        <Thumbnail small source={group.avatar} />
+                    </Left>
+                    <Body>
+                        <Text>{group.name}</Text>
+                    </Body>
+                    <Right>
+                        <Text style={{ backgroundColor: 'green', width: 25, height: 25, borderRadius: 12.5, color: 'white', textAlign: 'center' }}>+</Text>
+                    </Right>
+                </ListItem>
+            })}
         </List>
     </Container>
 }
