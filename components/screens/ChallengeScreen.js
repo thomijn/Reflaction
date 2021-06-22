@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React, {useState} from 'react';
+import {View, Image, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import firestore from '@react-native-firebase/firestore';
 import Radar from 'react-native-radar';
-import { Card, CardItem, Body, Badge } from 'native-base';
+import {Card, CardItem, Body, Badge} from 'native-base';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import kitchen from '../../assets/images/Open-Keuken.jpg';
 
 MapboxGL.setAccessToken(
   'pk.eyJ1IjoidGhvbWlqbiIsImEiOiJjazdoZ3Q0Y3EwOWpjM2xwOGxqbzAyMXN6In0.N8dw4i5BFe2WPxOGEIWBoA',
 );
 MapboxGL.setConnected(true);
 
-import { Button } from '../atoms/Buttons';
-import { Container } from '../atoms/Container';
-import { Header, Text } from '../atoms/Texts';
+import {Button} from '../atoms/Buttons';
+import {Container} from '../atoms/Container';
+import {Header, Text} from '../atoms/Texts';
 import TopHeader from '../molecules/TopHeader';
-import { useStore } from '../../store';
-import { theme } from '../../App';
+import {useStore} from '../../store';
+import {theme} from '../../App';
 
 const ChallengeScreen = ({
   navigation,
@@ -27,7 +28,7 @@ const ChallengeScreen = ({
   geofenceCoords,
   latestUser,
 }) => {
-  const { user } = useStore();
+  const {user, selectedLanguage} = useStore();
   const [challengeComplete, setChallengeComplete] = useState(false);
 
   const formatDate = () => {
@@ -48,7 +49,7 @@ const ChallengeScreen = ({
   Radar.on('events', (result) => {
     if (
       result.user.userId === user.uid &&
-      challenge.name === 'Wandelen' &&
+      challenge.name === 'Wandel met House of Hope' &&
       active
     ) {
       if (result.events[0].type === 'user.exited_geofence') {
@@ -62,7 +63,7 @@ const ChallengeScreen = ({
               score: latestUser?.score ? latestUser.score + 100 : 0 + 100,
               activeChallenge: 'null',
             },
-            { merge: true },
+            {merge: true},
           )
           .then(() => setChallengeComplete(true));
       }
@@ -71,37 +72,43 @@ const ChallengeScreen = ({
 
   return (
     <>
-      <Container background="#fff" style={{ padding: 20, height: '100%' }}>
+      <Container
+        background="#fff"
+        style={{padding: 20, height: '100%', flex: 1}}>
         <TopHeader navigation={navigation} />
-        <Header style={{ marginTop: 20, marginBottom: 20 }}>
+        <Header style={{marginTop: 20, marginBottom: 20}}>
           <Icon
             onPress={() => setSelectedChallenge(false)}
             size={30}
-            style={{ marginTop: 20 }}
+            style={{marginTop: 20}}
             name="arrow-left"
           />{' '}
           {challenge.name}
         </Header>
         <Text
-          style={{ marginBottom: 20, fontSize: 18, lineHeight: 25 }}
+          style={{marginBottom: 20, fontSize: 18, lineHeight: 25}}
           color={'#2B2D42'}>
           {challenge.text}
         </Text>
+        <Text color={'#2B2D42'} style={{opacity: 0.6, fontStyle: 'italic'}}>
+          Hoe verdien jij punten met deze challenge?{' '}
+        </Text>
+        <Text
+          style={{marginBottom: 20, fontSize: 18, lineHeight: 25}}
+          color={'#2B2D42'}>
+          {challenge.pointText}
+        </Text>
         {challenge.date && (
           <Badge
-            style={{ backgroundColor: 'green', marginBottom: 20, padding: 20 }}>
-            <Text style={{ color: 'white', fontSize: 13 }}>
+            style={{backgroundColor: 'green', marginBottom: 20, padding: 20}}>
+            <Text style={{color: 'white', fontSize: 13}}>
               {formatDate()}
               {'  '}17: 00
             </Text>
           </Badge>
         )}
-        {challenge.requirements.map((req) => (
-          <Text key={req} style={{ marginBottom: 20 }} color={'#2B2D42'}>
-            - {req}
-          </Text>
-        ))}
-        {challenge.name === 'Samen wandelen' && active && (
+
+        {challenge.name === 'Wandel met House of Hope' && active && (
           <View
             style={{
               alignItems: 'center',
@@ -122,6 +129,7 @@ const ChallengeScreen = ({
                 centerCoordinate={geofenceCoords}
               />
               <MapboxGL.PointAnnotation
+                id="geofence"
                 snippet="location"
                 coordinate={geofenceCoords}
               />
@@ -129,7 +137,7 @@ const ChallengeScreen = ({
             </MapboxGL.MapView>
           </View>
         )}
-        {!active && challenge.name === 'Samen wandelen' && (
+        {!active && challenge.name === 'Wandel met House of Hope' && (
           <View
             style={{
               bottom: 20,
@@ -144,7 +152,7 @@ const ChallengeScreen = ({
                 firestore()
                   .collection('users')
                   .doc(user.uid)
-                  .update({ activeChallenge: challenge.id });
+                  .update({activeChallenge: challenge.id});
               }}
               margin="0px 0px 0px 0px"
               text="START CHALLENGE"
@@ -161,25 +169,25 @@ const ChallengeScreen = ({
               alignItems: 'center',
               flexDirection: 'row',
             }}>
-            <View style={{ marginLeft: 15, width: '44%' }}>
+            <View style={{marginLeft: 15, width: '44%'}}>
               <Button
                 onPress={() => {
                   firestore()
                     .collection('users')
                     .doc(user.uid)
-                    .update({ activeChallenge: challenge.id });
+                    .update({activeChallenge: challenge.id});
                 }}
                 margin="0px 0px 0px 0px"
                 text="KOKEN"
               />
             </View>
-            <View style={{ marginLeft: 15, width: '44%' }}>
+            <View style={{marginLeft: 15, width: '44%'}}>
               <Button
                 onPress={() => {
                   firestore()
                     .collection('users')
                     .doc(user.uid)
-                    .update({ activeChallenge: challenge.id });
+                    .update({activeChallenge: challenge.id});
                 }}
                 margin="0px 0px 0px 0px"
                 text="AANSCHUIVEN"
@@ -187,9 +195,13 @@ const ChallengeScreen = ({
             </View>
           </View>
         )}
+        {active && challenge.name === 'Koken bij Open Keuken' && (
+          <Text color="#000">Tot dan!</Text>
+        )}
+
         {challengeComplete && (
           <>
-            <ConfettiCannon count={50} origin={{ x: -10, y: 0 }} />
+            <ConfettiCannon count={50} origin={{x: -10, y: 0}} />
             <View
               style={{
                 position: 'absolute',
@@ -198,14 +210,14 @@ const ChallengeScreen = ({
                 left: 19,
                 height: 400,
               }}>
-              <Card style={{ backgroundColor: theme.colors.orange }}>
+              <Card style={{backgroundColor: theme.colors.orange}}>
                 <CardItem header>
                   <Icon
                     onPress={() => {
                       setSelectedChallenge(false);
                     }}
                     size={30}
-                    style={{ position: 'absolute', right: 20 }}
+                    style={{position: 'absolute', right: 20}}
                     name="x"
                   />
                   <Text fontSize="20px" color="#000">
@@ -214,15 +226,12 @@ const ChallengeScreen = ({
                 </CardItem>
                 <CardItem>
                   <Body>
-                    <Text color="#000">
-                      {succes}
-                    </Text>
+                    <Text color="#000">{selectedLanguage.succes}</Text>
                   </Body>
                 </CardItem>
                 <CardItem footer button>
                   <Text color="#000">
-                    {earn} <Text color={theme.colors.orange}>100</Text>{' '}
-                    {points}
+                    {earn} <Text color={theme.colors.orange}>100</Text> {points}
                   </Text>
                 </CardItem>
               </Card>

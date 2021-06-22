@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, {useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { View, Animated, TouchableOpacity, Keyboard } from 'react-native';
+import {View, Animated, TouchableOpacity, Keyboard} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 
-import { Button } from '../atoms/Buttons';
+import {Button} from '../atoms/Buttons';
 import Input from '../atoms/Inputs';
-import { Header, Text } from '../atoms/Texts';
-import { useStore } from '../../store';
-import { theme } from '../../App';
+import {Header, Text} from '../atoms/Texts';
+import {useStore} from '../../store';
+import {theme} from '../../App';
 
-const LoginScreen = ({ navigate, fadeAnim, fadeOut }) => {
-  const { control, handleSubmit } = useForm();
-  const { setUser } = useStore();
+const LoginScreen = ({navigate, fadeAnim, fadeOut}) => {
+  const {control, handleSubmit} = useForm();
+  const {setUser, selectedLanguage} = useStore();
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (data) => {
@@ -26,7 +26,7 @@ const LoginScreen = ({ navigate, fadeAnim, fadeOut }) => {
           .collection('users')
           .doc(user.user._user.uid)
           .get();
-        setUser({ ...userInfo._data, uid: user.user._user.uid });
+        setUser({...userInfo._data, uid: user.user._user.uid});
         setLoading(false);
         if (userInfo.exists) {
           navigate('Home');
@@ -47,7 +47,7 @@ const LoginScreen = ({ navigate, fadeAnim, fadeOut }) => {
           .collection('users')
           .doc(user._user.uid)
           .get();
-        setUser({ ...userInfo._data, uid: user._user.uid });
+        setUser({...userInfo._data, uid: user._user.uid});
         if (userInfo.exists) {
           navigate('Home');
         } else {
@@ -69,7 +69,7 @@ const LoginScreen = ({ navigate, fadeAnim, fadeOut }) => {
           padding: 40,
           elevation: 8,
         },
-        { transform: [{ translateY: fadeAnim }] },
+        {transform: [{translateY: fadeAnim}]},
       ]}>
       <TouchableOpacity
         onPress={() => fadeOut()}
@@ -90,7 +90,7 @@ const LoginScreen = ({ navigate, fadeAnim, fadeOut }) => {
         }}>
         <Icon onPress={() => fadeOut()} name="close" size={30} color="#fff" />
       </TouchableOpacity>
-      <Header style={{ marginBottom: 20 }}>{login}</Header>
+      <Header style={{marginBottom: 20}}>{selectedLanguage.login}</Header>
       <Input
         placeholderTextColor=" rgba(0, 0, 0, 0.5)"
         placeholder="Email"
@@ -120,14 +120,14 @@ const LoginScreen = ({ navigate, fadeAnim, fadeOut }) => {
           flexDirection: 'row',
           justifyContent: 'center',
         }}>
-        <View style={{ width: '60%' }}>
-          <Text style={{ textAlign: 'left' }} color={theme.colors.orange}>
-            {forgot}
+        <View style={{width: '60%'}}>
+          <Text style={{textAlign: 'left'}} color={theme.colors.orange}>
+            {selectedLanguage.forgot}
           </Text>
         </View>
-        <View style={{ width: '40%' }}>
-          <Text style={{ textAlign: 'right' }} color="#000">
-            {registerUp}
+        <View style={{width: '40%'}}>
+          <Text style={{textAlign: 'right'}} color="#000">
+            {selectedLanguage.registerUp}
           </Text>
         </View>
       </View>

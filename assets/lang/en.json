@@ -19,6 +19,7 @@
     "registerUp": "Sign up",
     "signIn": "Login",
     "gotAccount": "Already have an account?",
+    "activeChallenge": "Active challenge",
     "register": "Register",
     "moreInfo": "Before we can search for a buddy, we would like to know more about you",
     "welcome": "Welkom to Buurt 010!",
@@ -28,5 +29,6 @@
     "profile": "Pic an avatar",
     "profileBuddy": "Personalise your profile so people can find you faster.",
     "currenyBuddy": "Your current buddy is",
-    "interests": "Interests:"
+    "interests": "Interests:",
+    "sendMessage": "Send a message to"
 }

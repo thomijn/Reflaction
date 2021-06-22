@@ -17,6 +17,7 @@
     "login": "Inloggen",
     "forgot": "Wachtwoord vergeten",
     "registerUp": "Sign up",
+    "activeChallenge": "Actieve challenge",
     "signIn": "Login",
     "gotAccount": "Heb je al een account?",
     "register": "Registreren",
@@ -28,5 +29,6 @@
     "profile": "Kies een profielfoto",
     "profileBuddy": "Maakt je profiel meer eigen zodat je beter een buddy kunt vinden.",
     "currenyBuddy": "Je huidige buddy is",
-    "interests": "Interesses:"
+    "interests": "Interesses:",
+    "sendMessage": "Stuur een bericht naar"
 }

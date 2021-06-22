@@ -1,29 +1,24 @@
 import React from 'react';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import {GiftedChat, Bubble} from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
 import rnfirebase from '@react-native-firebase/app';
-import { Header, Left, Button, Icon, Title, Body, Right } from 'native-base';
+import {Header, Left, Button, Icon, Title, Body, Right} from 'native-base';
 
 import useDocumentData from '../../hooks/useDocumentData';
-import { useStore } from '../../store';
-import { theme } from '../../App';
+import {useStore} from '../../store';
+import {theme} from '../../App';
 
-const GroupChatScreen = ({ setSelectedChat, selectedChat }) => {
-  console.log(selectedChat);
-  const { user } = useStore();
+const GroupChatScreen = ({setSelectedChat, selectedChat}) => {
+  const {user} = useStore();
   const [latestUser] = useDocumentData(`users/${user.uid}`);
-  const [messagesDoc, loading] = useDocumentData(
-    `chats/${latestUser?.chats}`,
-  );
+  const [messagesDoc, loading] = useDocumentData(`chats/${latestUser?.chats}`);
 
   const onSend = (messages) => {
-    console.log(messages);
-
     firestore()
       .collection('chats')
       .doc(latestUser?.chats[0])
       .update({
-        messages: rnfirebase.firestore.FieldValue.arrayUnion({ ...messages[0] }),
+        messages: rnfirebase.firestore.FieldValue.arrayUnion({...messages[0]}),
       })
       .catch((err) => console.log(err));
   };
@@ -34,7 +29,7 @@ const GroupChatScreen = ({ setSelectedChat, selectedChat }) => {
     );
 
     return sorted.map((message) => {
-      return { ...message, createdAt: message.createdAt.toDate() };
+      return {...message, createdAt: message.createdAt.toDate()};
     });
   };
 
@@ -43,13 +38,11 @@ const GroupChatScreen = ({ setSelectedChat, selectedChat }) => {
       <Header transparent androidStatusBarColor={theme.colors.orange}>
         <Left>
           <Button onPress={() => setSelectedChat(null)} transparent>
-            <Icon style={{ color: '#000' }} name="arrow-back" />
+            <Icon style={{color: '#000'}} name="arrow-back" />
           </Button>
         </Left>
         <Body>
-          <Title style={{ color: '#000' }}>
-            {messagesDoc.chatName}
-          </Title>
+          <Title style={{color: '#000'}}>{messagesDoc.chatName}</Title>
         </Body>
       </Header>
       <GiftedChat
@@ -77,11 +70,11 @@ const GroupChatScreen = ({ setSelectedChat, selectedChat }) => {
       <Header transparent androidStatusBarColor={theme.colors.orange}>
         <Left>
           <Button onPress={() => setSelectedChat(null)} transparent>
-            <Icon style={{ color: '#000' }} name="arrow-back" />
+            <Icon style={{color: '#000'}} name="arrow-back" />
           </Button>
         </Left>
         <Body>
-          <Title style={{ color: '#000' }}>
+          <Title style={{color: '#000'}}>
             {selectedChat.firstName} {selectedChat.lastName}
           </Title>
         </Body>

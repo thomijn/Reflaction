@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, {useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import auth from '@react-native-firebase/auth';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
-import { View, TouchableOpacity, Animated, Keyboard } from 'react-native';
+import {View, TouchableOpacity, Animated, Keyboard} from 'react-native';
 
-import { Button } from '../atoms/Buttons';
+import {Button} from '../atoms/Buttons';
 import Input from '../atoms/Inputs';
-import { Header, Text } from '../atoms/Texts';
-import { useStore } from '../../store';
-import { theme } from '../../App';
+import {Header, Text} from '../atoms/Texts';
+import {useStore} from '../../store';
+import {theme} from '../../App';
 
-const RegisterScreen = ({ navigate, fadeAnimRegister, fadeOut }) => {
-  const { control, handleSubmit } = useForm();
+const RegisterScreen = ({navigate, fadeAnimRegister, fadeOut}) => {
+  const {control, handleSubmit} = useForm();
   const [initializing, setInitializing] = useState(true);
-  const { setUser } = useStore();
-
+  const {setUser, selectedLanguage} = useStore();
   //create new user
   const onSubmit = (data) => {
     Keyboard.dismiss();
     auth()
       .createUserWithEmailAndPassword(data.email, data.password)
       .then((user) => {
-        setUser({ uid: user.user._user.uid });
+        setUser({uid: user.user._user.uid});
         console.log('User account created & signed in!');
         navigate('Home');
       })
@@ -54,7 +53,7 @@ const RegisterScreen = ({ navigate, fadeAnimRegister, fadeOut }) => {
           padding: 40,
           elevation: 8,
         },
-        { transform: [{ translateY: fadeAnimRegister }] },
+        {transform: [{translateY: fadeAnimRegister}]},
       ]}>
       <TouchableOpacity
         onPress={() => fadeOut(true)}
@@ -79,7 +78,7 @@ const RegisterScreen = ({ navigate, fadeAnimRegister, fadeOut }) => {
           color="#fff"
         />
       </TouchableOpacity>
-      <Header style={{ marginBottom: 20 }}>{register}</Header>
+      <Header style={{marginBottom: 20}}>{selectedLanguage.register}</Header>
       <Input
         placeholderTextColor=" rgba(0, 0, 0, 0.5)"
         placeholder="Email"
@@ -108,14 +107,14 @@ const RegisterScreen = ({ navigate, fadeAnimRegister, fadeOut }) => {
           flexDirection: 'row',
           justifyContent: 'center',
         }}>
-        <View style={{ width: '60%' }}>
-          <Text style={{ textAlign: 'left' }} color={theme.colors.orange}>
-            {gotAccount}
+        <View style={{width: '60%'}}>
+          <Text style={{textAlign: 'left'}} color={theme.colors.orange}>
+            {selectedLanguage.gotAccount}
           </Text>
         </View>
-        <View style={{ width: '40%' }}>
-          <Text style={{ textAlign: 'right' }} color="#000">
-            {signIn}
+        <View style={{width: '40%'}}>
+          <Text style={{textAlign: 'right'}} color="#000">
+            {selectedLanguage.signIn}
           </Text>
         </View>
       </View>

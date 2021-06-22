@@ -1,17 +1,12 @@
-<<<<<<< Updated upstream
-import React, { useEffect } from 'react';
-import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
-=======
 import React, {useEffect, useState} from 'react';
 import {View, Image, TouchableOpacity, ScrollView} from 'react-native';
->>>>>>> Stashed changes
 import Radar from 'react-native-radar';
 import {Card, CardItem, Badge} from 'native-base';
 
-import { Container } from '../atoms/Container';
-import { Header, Text } from '../atoms/Texts';
-import { useStore } from '../../store';
-import { Button } from '../atoms/Buttons';
+import {Container} from '../atoms/Container';
+import {Header, Text} from '../atoms/Texts';
+import {useStore} from '../../store';
+import {Button} from '../atoms/Buttons';
 import sitting from '../../assets/images/humaans.png';
 import TopHeader from '../molecules/TopHeader';
 import ChallengeCard from '../molecules/ChallengeCard';
@@ -19,6 +14,8 @@ import ShadowCard from '../atoms/ShadowCard';
 import Leaderboard from '../molecules/Leaderboard';
 import useDocumentData from '../../hooks/useDocumentData';
 import {theme} from '../../App';
+import en from '../../assets/lang/en.json';
+import nl from '../../assets/lang/nl.json';
 
 const HomeScreen = ({navigation}) => {
   const {user, setSelectedLanguage, selectedLanguage} = useStore();
@@ -53,11 +50,11 @@ const HomeScreen = ({navigation}) => {
               justifyContent: 'center',
               padding: 20,
             }}>
-            <Header style={{ marginTop: 20 }} color="#000">
+            <Header style={{marginTop: 20}} color="#000">
               {user?.firstName || 'Gebruiker'}!
             </Header>
             <Text
-              style={{ fontSize: 20, textAlign: 'center' }}
+              style={{fontSize: 20, textAlign: 'center'}}
               color="#000"></Text>
             <Button
               onPress={() => navigation.navigate('Buddy')}
@@ -81,7 +78,7 @@ const HomeScreen = ({navigation}) => {
               <View style={{position: 'absolute', width: '100%'}}>
                 <Card>
                   <CardItem>
-                    <Header color="#000" fontSize="15">
+                    <Header color="#000" fontSize="15px">
                       Selecteer taal
                     </Header>
                   </CardItem>
@@ -90,7 +87,7 @@ const HomeScreen = ({navigation}) => {
                       <TouchableOpacity
                         onPress={() => {
                           setLanguageOpen(false);
-                          setSelectedLanguage('NL');
+                          setSelectedLanguage(nl);
                         }}>
                         <Badge
                           style={{
@@ -103,7 +100,7 @@ const HomeScreen = ({navigation}) => {
                       <TouchableOpacity
                         onPress={() => {
                           setLanguageOpen(false);
-                          setSelectedLanguage('EN');
+                          setSelectedLanguage(en);
                         }}>
                         <Badge
                           style={{
@@ -120,13 +117,15 @@ const HomeScreen = ({navigation}) => {
             )}
             <Header style={{marginTop: 20}}>Hey {user.firstName}!</Header>
             <Header color={'#FC9A00'} style={{marginTop: 20, fontSize: 20}}>
-              Actieve Challenge
+              {selectedLanguage.activeChallenge}
             </Header>
             {activeChallenge && latestUser?.activeChallenge !== 'null' ? (
               <>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Challenges')}>
                   <ChallengeCard
+                    house={activeChallenge.name === 'Wandel met House of Hope'}
+                    open={activeChallenge.name !== 'Wandel met House of Hope'}
                     active={true}
                     header={activeChallenge.name}
                     body={activeChallenge.description}
@@ -136,19 +135,19 @@ const HomeScreen = ({navigation}) => {
             ) : (
               <TouchableOpacity
                 onPress={() => navigation.navigate('Challenges')}>
-                <Text style={{ marginTop: 10 }} color="#000">
-                  {noActive}
+                <Text style={{marginTop: 10}} color="#000">
+                  {selectedLanguage.noActive}
                 </Text>
               </TouchableOpacity>
             )}
-            <Header color={'#FFA62B'} style={{ marginTop: 20, fontSize: 20 }}>
-              {latest}
+            <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
+              {selectedLanguage.latest}
             </Header>
             <TouchableOpacity
               onPress={() => navigation.navigate('Chat')}
               activeOpacity={0.8}>
               <ShadowCard>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image
                     style={{
                       width: 40,
@@ -156,9 +155,9 @@ const HomeScreen = ({navigation}) => {
                       borderRadius: 50,
                       marginRight: 10,
                     }}
-                    source={{ uri: buddy?.userImage }}
+                    source={{uri: buddy?.userImage}}
                   />
-                  <Text style={{ marginRight: 10 }} color={'#FC9A00'}>
+                  <Text style={{marginRight: 10}} color={'#FC9A00'}>
                     {buddyChat?.messages.length
                       ? buddyChat?.messages[buddyChat?.messages.length - 1].text
                       : ''}

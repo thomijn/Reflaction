@@ -1,7 +1,8 @@
-import styled, { css } from 'styled-components/native';
+import styled, {css} from 'styled-components/native';
 import React from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { theme } from '../../App';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {theme} from '../../App';
+import {useStore} from '../../store';
 
 export const ButtonStyled = styled.TouchableOpacity`
   color: red;
@@ -50,7 +51,7 @@ export const TextStyled = styled.Text`
     `}
 `;
 
-export const Button = ({ text, loading, icon, ...props }) => {
+export const Button = ({text, loading, icon, ...props}) => {
   return (
     <ButtonStyled activeOpacity={0.7} {...props}>
       {loading ? (
@@ -64,7 +65,9 @@ export const Button = ({ text, loading, icon, ...props }) => {
   );
 };
 
-export const SwitchButton = ({ fadeIn }) => {
+export const SwitchButton = ({fadeIn}) => {
+  const {selectedLanguage} = useStore();
+
   return (
     <>
       <View
@@ -97,8 +100,8 @@ export const SwitchButton = ({ fadeIn }) => {
               borderRadius: 30,
             }}>
             <Text
-              style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold' }}>
-              {signIn}
+              style={{color: '#fff', textAlign: 'center', fontWeight: 'bold'}}>
+              {selectedLanguage.signIn}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -106,14 +109,14 @@ export const SwitchButton = ({ fadeIn }) => {
               fadeIn(true);
             }}
             activeOpacity={0.8}
-            style={{ width: '50%', padding: 15 }}>
+            style={{width: '50%', padding: 15}}>
             <Text
               style={{
                 color: theme.colors.orange,
                 textAlign: 'center',
                 fontWeight: 'bold',
               }}>
-              {register}
+              {selectedLanguage.register}
             </Text>
           </TouchableOpacity>
         </View>
