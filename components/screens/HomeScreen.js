@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
+=======
+import React, {useEffect, useState} from 'react';
+import {View, Image, TouchableOpacity, ScrollView} from 'react-native';
+>>>>>>> Stashed changes
 import Radar from 'react-native-radar';
+import {Card, CardItem, Badge} from 'native-base';
 
 import { Container } from '../atoms/Container';
 import { Header, Text } from '../atoms/Texts';
@@ -12,10 +18,11 @@ import ChallengeCard from '../molecules/ChallengeCard';
 import ShadowCard from '../atoms/ShadowCard';
 import Leaderboard from '../molecules/Leaderboard';
 import useDocumentData from '../../hooks/useDocumentData';
-import { useTranslation } from '../../assets/context/LanguageContext';
+import {theme} from '../../App';
 
-const HomeScreen = ({ navigation }) => {
-  const { user } = useStore();
+const HomeScreen = ({navigation}) => {
+  const {user, setSelectedLanguage, selectedLanguage} = useStore();
+  const [languageOpen, setLanguageOpen] = useState(false);
   const [latestUser, loading] = useDocumentData(`users/${user.uid}`);
   const [buddy] = useDocumentData(`users/${latestUser?.buddy}`);
   const [activeChallenge] = useDocumentData(
@@ -27,12 +34,15 @@ const HomeScreen = ({ navigation }) => {
     Radar.setUserId(user.uid);
   }, []);
 
-  // const { hello } = useTranslation();
-
   return (
     <ScrollView>
-      <Container background="#fff" style={{ padding: 20 }}>
-        <TopHeader navigation={navigation} />
+      <Container background="#fff" style={{padding: 20}}>
+        <TopHeader
+          lang
+          languageOpen={languageOpen}
+          setLanguageOpen={setLanguageOpen}
+          navigation={navigation}
+        />
         {!latestUser?.buddy ? (
           <View
             style={{
@@ -67,9 +77,50 @@ const HomeScreen = ({ navigation }) => {
           </View>
         ) : (
           <View>
-            <Header style={{ marginTop: 20 }}>Hey {user.firstName}!</Header>
-            <Header color={'#FC9A00'} style={{ marginTop: 20, fontSize: 20 }}>
-              {active}
+            {languageOpen && (
+              <View style={{position: 'absolute', width: '100%'}}>
+                <Card>
+                  <CardItem>
+                    <Header color="#000" fontSize="15">
+                      Selecteer taal
+                    </Header>
+                  </CardItem>
+                  <CardItem>
+                    <View style={{flexDirection: 'row'}}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setLanguageOpen(false);
+                          setSelectedLanguage('NL');
+                        }}>
+                        <Badge
+                          style={{
+                            marginRight: 10,
+                            backgroundColor: theme.colors.orange,
+                          }}>
+                          <Text>NL</Text>
+                        </Badge>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setLanguageOpen(false);
+                          setSelectedLanguage('EN');
+                        }}>
+                        <Badge
+                          style={{
+                            marginRight: 10,
+                            backgroundColor: theme.colors.orange,
+                          }}>
+                          <Text>EN</Text>
+                        </Badge>
+                      </TouchableOpacity>
+                    </View>
+                  </CardItem>
+                </Card>
+              </View>
+            )}
+            <Header style={{marginTop: 20}}>Hey {user.firstName}!</Header>
+            <Header color={'#FC9A00'} style={{marginTop: 20, fontSize: 20}}>
+              Actieve Challenge
             </Header>
             {activeChallenge && latestUser?.activeChallenge !== 'null' ? (
               <>

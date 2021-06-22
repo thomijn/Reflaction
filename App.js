@@ -15,6 +15,7 @@ import ChatsScreen from './components/screens/ChatsScreen';
 import GroupsScreen from './components/screens/GroupsScreen';
 import {initRadar} from './hooks/radar';
 import LeaderboardScreen from './components/screens/LeaderboardScreen';
+import * as RNLocalize from 'react-native-localize';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -24,7 +25,7 @@ export const theme = {
     blue: '#2580e8',
     orange: '#FC9A00',
     gray: '#f7f7f7',
-    green: '',
+    green: 'green',
   },
 };
 
