@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
 import useCollectionData from '../../hooks/useCollectionData';
 import useDocumentData from '../../hooks/useDocumentData';
-import {useStore} from '../../store';
-import {Container} from '../atoms/Container';
-import {Header} from '../atoms/Texts';
+import { useStore } from '../../store';
+import { Container } from '../atoms/Container';
+import { Header } from '../atoms/Texts';
 import ChallengeCard from '../molecules/ChallengeCard';
 import TopHeader from '../molecules/TopHeader';
 import ChallengeScreen from './ChallengeScreen';
 
-const ChallengesScreen = ({navigation}) => {
+const ChallengesScreen = ({ navigation }) => {
   const [selectedChallenge, setSelectedChallenge] = useState();
-  const {user} = useStore();
+  const { user } = useStore();
   const [latestUser] = useDocumentData(`users/${user.uid}`);
   const [activeChallenge] = useDocumentData(
     `challenges/${latestUser?.activeChallenge}`,
@@ -50,14 +50,14 @@ const ChallengesScreen = ({navigation}) => {
           challenge={selectedChallenge}
         />
       ) : (
-        <ScrollView style={{height: '100%', backgroundColor: '#fff'}}>
-          <Container background="#fff" style={{padding: 20, height: '100%'}}>
+        <ScrollView style={{ height: '100%', backgroundColor: '#fff' }}>
+          <Container background="#fff" style={{ padding: 20, height: '100%' }}>
             <TopHeader navigation={navigation} />
-            <Header style={{marginTop: 20}}>Challenges</Header>
+            <Header style={{ marginTop: 20 }}>Challenges</Header>
             {activeChallenge && latestUser?.activeChallenge !== 'null' && (
               <>
-                <Header color={'#FC9A00'} style={{marginTop: 20, fontSize: 20}}>
-                  Actieve Challenge
+                <Header color={'#FC9A00'} style={{ marginTop: 20, fontSize: 20 }}>
+                  {active}
                 </Header>
                 <TouchableOpacity
                   onPress={() => setSelectedChallenge(activeChallenge)}>
@@ -69,8 +69,8 @@ const ChallengesScreen = ({navigation}) => {
                 </TouchableOpacity>
               </>
             )}
-            <Header color={'#000'} style={{marginTop: 20, fontSize: 20}}>
-              Open Challenges
+            <Header color={'#000'} style={{ marginTop: 20, fontSize: 20 }}>
+              {open}
             </Header>
             {challenges.map((challenge) => (
               <TouchableOpacity

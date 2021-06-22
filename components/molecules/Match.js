@@ -1,12 +1,12 @@
 import React from 'react';
-import {Card, CardItem, Button, Icon} from 'native-base';
-import {View} from 'react-native';
+import { Card, CardItem, Button, Icon } from 'native-base';
+import { View } from 'react-native';
 import useDocumentData from '../../hooks/useDocumentData';
-import {Image} from 'react-native';
-import {theme} from '../../App';
-import {Header, Text} from '../atoms/Texts';
+import { Image } from 'react-native';
+import { theme } from '../../App';
+import { Header, Text } from '../atoms/Texts';
 
-const Match = ({latestUser, setMatch}) => {
+const Match = ({ latestUser, setMatch }) => {
   const [buddy, loading] = useDocumentData(`users/${latestUser?.buddy}`);
 
   return loading ? null : (
@@ -29,9 +29,9 @@ const Match = ({latestUser, setMatch}) => {
         <Button
           onPress={() => setMatch(false)}
           transparent
-          style={{position: 'absolute', zIndex: 12, right: 0}}
+          style={{ position: 'absolute', zIndex: 12, right: 0 }}
           light>
-          <Icon style={{color: '#fff'}} name="close" />
+          <Icon style={{ color: '#fff' }} name="close" />
         </Button>
         <CardItem
           header
@@ -44,7 +44,7 @@ const Match = ({latestUser, setMatch}) => {
             paddingRight: 0,
           }}>
           <Image
-            source={{uri: buddy?.userImage}}
+            source={{ uri: buddy?.userImage }}
             style={{
               height: 200,
               width: null,
@@ -55,13 +55,13 @@ const Match = ({latestUser, setMatch}) => {
           />
         </CardItem>
         <CardItem
-          style={{borderTopLeftRadius: 8, borderTopRightRadius: 8}}
-          style={{paddingBottom: 0, paddingTop: 0}}>
-          <Header color={theme.colors.orange}>Gefeleciteerd!</Header>
+          style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+          style={{ paddingBottom: 0, paddingTop: 0 }}>
+          <Header color={theme.colors.orange}>{congratulations}</Header>
         </CardItem>
         <CardItem
-          style={{borderBottomLeftRadius: 8, borderBottomRightRadius: 8}}>
-          <Text color="#000">{buddy?.firstName} is je niewe buddy!</Text>
+          style={{ borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
+          <Text color="#000">{buddy?.firstName} {newBuddy}</Text>
         </CardItem>
       </Card>
     </View>

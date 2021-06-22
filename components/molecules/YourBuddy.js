@@ -12,7 +12,7 @@ const YourBuddy = ({ navigation, latestUser }) => {
   return (
     <Container background="#fff" style={{ padding: 20 }}>
       <TopHeader navigation={navigation} />
-      <Header style={{ marginTop: 20 }}>Je huidige buddy is</Header>
+      <Header style={{ marginTop: 20 }}>{currentBuddy}</Header>
       <ShadowCard>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Image
@@ -30,7 +30,7 @@ const YourBuddy = ({ navigation, latestUser }) => {
           </Header>
         </View>
         <View style={{ flexDirection: 'row', marginTop: 15 }}>
-          <Text color="#FC9A00">Interesses:</Text>
+          <Text color="#FC9A00">{interests}</Text>
         </View>
         <View style={{ flexDirection: 'row', marginTop: 5 }}>
           {buddy?.preferences.activity.map((activity) => (

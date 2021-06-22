@@ -1,21 +1,21 @@
-import React, {useEffect} from 'react';
-import {View, Image, TouchableOpacity, ScrollView} from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Radar from 'react-native-radar';
 
-import {Container} from '../atoms/Container';
-import {Header, Text} from '../atoms/Texts';
-import {useStore} from '../../store';
-import {Button} from '../atoms/Buttons';
+import { Container } from '../atoms/Container';
+import { Header, Text } from '../atoms/Texts';
+import { useStore } from '../../store';
+import { Button } from '../atoms/Buttons';
 import sitting from '../../assets/images/humaans.png';
 import TopHeader from '../molecules/TopHeader';
 import ChallengeCard from '../molecules/ChallengeCard';
 import ShadowCard from '../atoms/ShadowCard';
 import Leaderboard from '../molecules/Leaderboard';
 import useDocumentData from '../../hooks/useDocumentData';
-import {useTranslation} from '../../assets/context/LanguageContext';
+import { useTranslation } from '../../assets/context/LanguageContext';
 
-const HomeScreen = ({navigation}) => {
-  const {user} = useStore();
+const HomeScreen = ({ navigation }) => {
+  const { user } = useStore();
   const [latestUser, loading] = useDocumentData(`users/${user.uid}`);
   const [buddy] = useDocumentData(`users/${latestUser?.buddy}`);
   const [activeChallenge] = useDocumentData(
@@ -31,7 +31,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <ScrollView>
-      <Container background="#fff" style={{padding: 20}}>
+      <Container background="#fff" style={{ padding: 20 }}>
         <TopHeader navigation={navigation} />
         {!latestUser?.buddy ? (
           <View
@@ -43,11 +43,11 @@ const HomeScreen = ({navigation}) => {
               justifyContent: 'center',
               padding: 20,
             }}>
-            <Header style={{marginTop: 20}} color="#000">
+            <Header style={{ marginTop: 20 }} color="#000">
               {user?.firstName || 'Gebruiker'}!
             </Header>
             <Text
-              style={{fontSize: 20, textAlign: 'center'}}
+              style={{ fontSize: 20, textAlign: 'center' }}
               color="#000"></Text>
             <Button
               onPress={() => navigation.navigate('Buddy')}
@@ -67,9 +67,9 @@ const HomeScreen = ({navigation}) => {
           </View>
         ) : (
           <View>
-            <Header style={{marginTop: 20}}>Hey {user.firstName}!</Header>
-            <Header color={'#FC9A00'} style={{marginTop: 20, fontSize: 20}}>
-              Actieve Challenge
+            <Header style={{ marginTop: 20 }}>Hey {user.firstName}!</Header>
+            <Header color={'#FC9A00'} style={{ marginTop: 20, fontSize: 20 }}>
+              {active}
             </Header>
             {activeChallenge && latestUser?.activeChallenge !== 'null' ? (
               <>
@@ -85,19 +85,19 @@ const HomeScreen = ({navigation}) => {
             ) : (
               <TouchableOpacity
                 onPress={() => navigation.navigate('Challenges')}>
-                <Text style={{marginTop: 10}} color="#000">
-                  Je hebt nog geen actieve challenge
+                <Text style={{ marginTop: 10 }} color="#000">
+                  {noActive}
                 </Text>
               </TouchableOpacity>
             )}
-            <Header color={'#FFA62B'} style={{marginTop: 20, fontSize: 20}}>
-              Laatse bericht
+            <Header color={'#FFA62B'} style={{ marginTop: 20, fontSize: 20 }}>
+              {latest}
             </Header>
             <TouchableOpacity
               onPress={() => navigation.navigate('Chat')}
               activeOpacity={0.8}>
               <ShadowCard>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
                     style={{
                       width: 40,
@@ -105,9 +105,9 @@ const HomeScreen = ({navigation}) => {
                       borderRadius: 50,
                       marginRight: 10,
                     }}
-                    source={{uri: buddy?.userImage}}
+                    source={{ uri: buddy?.userImage }}
                   />
-                  <Text style={{marginRight: 10}} color={'#FC9A00'}>
+                  <Text style={{ marginRight: 10 }} color={'#FC9A00'}>
                     {buddyChat?.messages.length
                       ? buddyChat?.messages[buddyChat?.messages.length - 1].text
                       : ''}

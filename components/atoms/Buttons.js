@@ -98,7 +98,7 @@ export const SwitchButton = ({ fadeIn }) => {
             }}>
             <Text
               style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold' }}>
-              Login
+              {signIn}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -113,7 +113,7 @@ export const SwitchButton = ({ fadeIn }) => {
                 textAlign: 'center',
                 fontWeight: 'bold',
               }}>
-              Registreren
+              {register}
             </Text>
           </TouchableOpacity>
         </View>

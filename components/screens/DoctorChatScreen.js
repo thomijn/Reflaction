@@ -71,7 +71,7 @@ const DoctorChatScreen = ({ setSelectedChat, selectedChat }) => {
                 </Left>
                 <Body>
                     <Title style={{ color: '#000' }}>
-                        Dokter chat
+                        {doctorChat}
                     </Title>
                 </Body>
                 <Right></Right>
