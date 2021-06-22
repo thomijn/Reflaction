@@ -12,6 +12,8 @@ target 'Reflaction' do
 
   pod 'react-native-mapbox-gl', :path => '../node_modules/@react-native-mapbox-gl/maps'
 
+  pod 'RNLocalize', :path => '../node_modules/react-native-localize'
+
   target 'ReflactionTests' do
     inherit! :complete
     # Pods for testing

@@ -1,56 +1,73 @@
 import React from 'react';
-import { Container } from '../atoms/Container';
-import { Header, Text } from '../atoms/Texts';
-import { View, Image } from 'react-native';
-import ShadowCard from '../atoms/ShadowCard';
-import icon from '../../assets/images/010_icoon.png';
+import {View, Image} from 'react-native';
 
-const Leaderboard = ({ active, body, header }) => {
-  const leaders = [
-    {
-      position: '1',
-      name: 'Willem en Varun',
-      image: '../../assets/images/010_icoon.png',
-      points: 30,
-    },
-  ];
+import {Header, Text} from '../atoms/Texts';
+import ShadowCard from '../atoms/ShadowCard';
+import useCollectionData from '../../hooks/useCollectionData';
+
+const Leaderboard = ({navigation, short}) => {
+  const [users] = useCollectionData(`users`, {
+    orderBy: ['score', 'desc'],
+    limit: short ? 2 : 10,
+  });
+  const leaders = users.map((user, index) => {
+    return {
+      name: user.firstName,
+      score: user.score,
+      position: index + 1,
+      userImage: user.userImage,
+    };
+  });
 
   return (
     <View
       background="#fff"
-      style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-      <Header style={{ marginTop: 20, fontSize: 20 }} color="#FC9A00">
+      style={{alignItems: 'flex-start', justifyContent: 'center'}}>
+      <Header
+        style={{marginTop: 20, fontSize: 20}}
+        color={short ? '#FC9A00' : '#000'}>
         Leaderboard
       </Header>
-      <ShadowCard
-        style={{
-          flexDirection: 'column',
-          // flex: 1,
-          // flexWrap: 'wrap',
-        }}
-        direction={'row'}>
-        {leaders.map((leader, index) => {
-          return (
+      {leaders.map((leader, index) => {
+        return (
+          <ShadowCard
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              flex: 1,
+              flexWrap: 'wrap',
+            }}
+            direction={'row'}>
             <View
               key={index}
               style={{
                 width: '100%',
-                alignSelf: 'stretch',
+                alignItems: 'center',
+                alignSelf: 'center',
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 flex: 1,
               }}>
-              <Text style={{ marginRight: 10 }} color={'#FC9A00'}>
+              <Text style={{marginRight: 10, fontSize: 20}} color={'#FC9A00'}>
                 {leader.position}
               </Text>
-              <Text style={{ marginRight: 'auto' }} color={'#000'}>
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 50,
+                  marginRight: 10,
+                }}
+                source={{uri: leader?.userImage}}
+              />
+              <Text style={{marginRight: 'auto'}} color={'#000'}>
                 {leader.name}
               </Text>
-              <Text color={'#FC9A00'}>{leader.points}</Text>
+              <Text color={'#FC9A00'}>{leader.score}</Text>
             </View>
-          );
-        })}
-      </ShadowCard>
+          </ShadowCard>
+        );
+      })}
     </View>
   );
 };

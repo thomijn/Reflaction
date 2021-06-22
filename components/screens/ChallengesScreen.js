@@ -18,6 +18,7 @@ const ChallengesScreen = ({navigation}) => {
   const [activeChallenge] = useDocumentData(
     `challenges/${latestUser?.activeChallenge}`,
   );
+
   const [challenges] = useCollectionData('challenges', {
     where: [[firestore.FieldPath.documentId(), '!=', user.activeChallenge]],
   });
@@ -49,7 +50,7 @@ const ChallengesScreen = ({navigation}) => {
           challenge={selectedChallenge}
         />
       ) : (
-        <ScrollView>
+        <ScrollView style={{height: '100%', backgroundColor: '#fff'}}>
           <Container background="#fff" style={{padding: 20, height: '100%'}}>
             <TopHeader navigation={navigation} />
             <Header style={{marginTop: 20}}>Challenges</Header>

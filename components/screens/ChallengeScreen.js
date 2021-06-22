@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import firestore from '@react-native-firebase/firestore';
 import Radar from 'react-native-radar';
-import {Card, CardItem, Body} from 'native-base';
+import {Card, CardItem, Body, Badge} from 'native-base';
 import ConfettiCannon from 'react-native-confetti-cannon';
 
 MapboxGL.setAccessToken(
@@ -30,7 +30,19 @@ const ChallengeScreen = ({
   const {user} = useStore();
   const [challengeComplete, setChallengeComplete] = useState(false);
 
-  console.log(challenge.name, active);
+  const formatDate = () => {
+    let dd = challenge.date.toDate().getDate();
+    let mm = challenge.date.toDate().getMonth() + 1;
+
+    let yyyy = challenge.date.toDate().getFullYear();
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    return dd + '-' + mm + '-' + yyyy;
+  };
 
   //check geofence events
   Radar.on('events', (result) => {
@@ -59,7 +71,7 @@ const ChallengeScreen = ({
 
   return (
     <>
-      <Container background="#fff" style={{padding: 20}}>
+      <Container background="#fff" style={{padding: 20, height: '100%'}}>
         <TopHeader navigation={navigation} />
         <Header style={{marginTop: 20, marginBottom: 20}}>
           <Icon
@@ -75,12 +87,21 @@ const ChallengeScreen = ({
           color={'#2B2D42'}>
           {challenge.text}
         </Text>
+        {challenge.date && (
+          <Badge
+            style={{backgroundColor: 'green', marginBottom: 20, padding: 20}}>
+            <Text style={{color: 'white', fontSize: 13}}>
+              {formatDate()}
+              {'  '}17: 00
+            </Text>
+          </Badge>
+        )}
         {challenge.requirements.map((req) => (
           <Text key={req} style={{marginBottom: 20}} color={'#2B2D42'}>
             - {req}
           </Text>
         ))}
-        {challenge.name === 'Wandelen' && active && (
+        {challenge.name === 'Samen wandelen' && active && (
           <View
             style={{
               alignItems: 'center',
@@ -108,7 +129,7 @@ const ChallengeScreen = ({
             </MapboxGL.MapView>
           </View>
         )}
-        {!active && challenge.name === 'Wandelen' && (
+        {!active && challenge.name === 'Samen wandelen' && (
           <View
             style={{
               bottom: 20,
@@ -130,7 +151,7 @@ const ChallengeScreen = ({
             />
           </View>
         )}
-        {!active && challenge.name === 'Open keuken' && (
+        {!active && challenge.name === 'Koken bij Open Keuken' && (
           <View
             style={{
               bottom: 20,

@@ -1,10 +1,10 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { ThemeProvider } from 'styled-components';
+import {ThemeProvider} from 'styled-components';
 
 import HomeScreen from './components/screens/HomeScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
@@ -13,7 +13,8 @@ import BuddyScreen from './components/screens/BuddyScreen';
 import ChallengesScreen from './components/screens/ChallengesScreen';
 import ChatsScreen from './components/screens/ChatsScreen';
 import GroupsScreen from './components/screens/GroupsScreen';
-import { initRadar } from './hooks/radar';
+import {initRadar} from './hooks/radar';
+import LeaderboardScreen from './components/screens/LeaderboardScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -23,6 +24,7 @@ export const theme = {
     blue: '#2580e8',
     orange: '#FC9A00',
     gray: '#f7f7f7',
+    green: '',
   },
 };
 
@@ -35,7 +37,7 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{headerShown: false}}
             name="Welcome"
             component={WelcomeScreen}
           />
@@ -47,6 +49,13 @@ function App() {
             name="Home"
             component={Root}
           />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Leaderboard"
+            component={LeaderboardScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>
@@ -57,8 +66,8 @@ const Root = () => {
   return (
     <>
       <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
             let iconName;
 
             if (route.name === 'Home') {
