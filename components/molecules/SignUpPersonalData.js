@@ -1,14 +1,14 @@
-import React, {useRef, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {Animated, View, Platform, Image} from 'react-native';
+import React, { useRef, useState, useStore } from 'react';
+import { useForm } from 'react-hook-form';
+import { Animated, View, Platform, Image } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import {theme} from '../../App';
+import { theme } from '../../App';
 
-import {Button} from '../atoms/Buttons';
-import Input, {InputStyled} from '../atoms/Inputs';
-import {Header, Text} from '../atoms/Texts';
+import { Button } from '../atoms/Buttons';
+import Input, { InputStyled } from '../atoms/Inputs';
+import { Header, Text } from '../atoms/Texts';
 
-const SignUpPersonalData = ({setformData, setPhaseForm}) => {
+const SignUpPersonalData = ({ setformData, setPhaseForm }) => {
   const [phase, setPhase] = useState(0);
   const xAnim = useRef(new Animated.Value(0)).current;
   const [image, setImage] = useState(null);
@@ -17,7 +17,7 @@ const SignUpPersonalData = ({setformData, setPhaseForm}) => {
   const [age, setAge] = useState();
 
   const onSubmit = () => {
-    setformData({firstName, lastName, age, image});
+    setformData({ firstName, lastName, age, image });
     setPhaseForm(2);
   };
 
@@ -46,10 +46,11 @@ const SignUpPersonalData = ({setformData, setPhaseForm}) => {
   };
 
   const renderForm = () => {
+
     switch (phase) {
       case 0:
         return (
-          <Animated.View style={[{}, {transform: [{translateX: xAnim}]}]}>
+          <Animated.View style={[{}, { transform: [{ translateX: xAnim }] }]}>
             <Header
               style={{
                 color: theme.colors.orange,
@@ -58,7 +59,7 @@ const SignUpPersonalData = ({setformData, setPhaseForm}) => {
               }}>
               Over jou
             </Header>
-            <Text color="#000" style={{fontSize: 20, marginBottom: 20}}>
+            <Text color="#000" style={{ fontSize: 20, marginBottom: 20 }}>
               We willen graag wat meer over je weten!
             </Text>
             <InputStyled
@@ -113,7 +114,7 @@ const SignUpPersonalData = ({setformData, setPhaseForm}) => {
                 direction: 'row',
                 height: '100%',
               },
-              {transform: [{translateX: xAnim}]},
+              { transform: [{ translateX: xAnim }] },
             ]}>
             <Header
               style={{
@@ -121,10 +122,10 @@ const SignUpPersonalData = ({setformData, setPhaseForm}) => {
                 fontSize: 35,
                 marginBottom: 20,
               }}>
-              {profile}
+              Kies een profielfoto
             </Header>
-            <Text color="#000" style={{fontSize: 20, marginBottom: 20}}>
-              {profileBuddy}
+            <Text color="#000" style={{ fontSize: 20, marginBottom: 20 }}>
+              Maakt je profiel meer eigen zodat je beter een buddy kunt vinden.
             </Text>
             <View
               style={{
@@ -141,7 +142,7 @@ const SignUpPersonalData = ({setformData, setPhaseForm}) => {
                     marginTop: 20,
                     marginBottom: 20,
                   }}
-                  source={{uri: image}}
+                  source={{ uri: image }}
                 />
               ) : null}
             </View>
