@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import React, {useState} from 'react';
+import {View, ActivityIndicator} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
-import { Button } from '../atoms/Buttons';
-import { Container } from '../atoms/Container';
-import { Header, Text } from '../atoms/Texts';
+import {Button} from '../atoms/Buttons';
+import {Container} from '../atoms/Container';
+import {Header, Text} from '../atoms/Texts';
 import SignUpMatching from '../molecules/SignUpMatching';
 import SignUpPersonalData from '../molecules/SignUpPersonalData';
-import { useStore } from '../../store';
-import { theme } from '../../App';
+import {useStore} from '../../store';
+import {theme} from '../../App';
 
-const SignUpForm = ({ navigation: { navigate } }) => {
-  const { user, setUser } = useStore();
+const SignUpForm = ({navigation: {navigate}}) => {
+  const {user, setUser} = useStore();
   const [phaseForm, setPhaseForm] = useState(0);
   const [formData, setformData] = useState();
   const [matchingData, setMatchingData] = useState();
@@ -40,7 +40,7 @@ const SignUpForm = ({ navigation: { navigate } }) => {
 
       setTransferred(
         Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
-        100,
+          100,
       );
     });
 
@@ -64,20 +64,22 @@ const SignUpForm = ({ navigation: { navigate } }) => {
       .set({
         ...formData,
         userImage: imageUrl,
-        preferences: { ...matchingData },
+        preferences: {...matchingData},
         buddy: false,
         dislikes: [],
         likes: [],
+        activeChallenge: 'null',
       })
       .then(() => {
         setUser({
           uid: user.uid,
           ...formData,
           userImage: imageUrl,
-          preferences: { ...matchingData },
+          preferences: {...matchingData},
           buddy: false,
           dislikes: [],
           likes: [],
+          activeChallenge: 'null',
         });
         navigate('Home');
       })
@@ -129,9 +131,8 @@ const SignUpForm = ({ navigation: { navigate } }) => {
   );
 };
 
-const Intro = ({ setPhaseForm }) => {
-
-  const { selectedLanguage } = useStore();
+const Intro = ({setPhaseForm}) => {
+  const {selectedLanguage} = useStore();
 
   return (
     <View
@@ -143,12 +144,12 @@ const Intro = ({ setPhaseForm }) => {
         justifyContent: 'center',
         height: '100%',
       }}>
-      <Header margin="0px 0px 10px 0px" style={{ textAlign: 'center' }}>
+      <Header margin="0px 0px 10px 0px" style={{textAlign: 'center'}}>
         {selectedLanguage.welcome}
       </Header>
       <Text
         margin="0px 0px 10px 0px"
-        style={{ textAlign: 'center' }}
+        style={{textAlign: 'center'}}
         color="#000">
         {selectedLanguage.moreInfo}
       </Text>
@@ -161,9 +162,8 @@ const Intro = ({ setPhaseForm }) => {
   );
 };
 
-const End = ({ submitAll, uploading, transferred }) => {
-
-  const { selectedLanguage } = useStore();
+const End = ({submitAll, uploading, transferred}) => {
+  const {selectedLanguage} = useStore();
 
   return (
     <View
@@ -175,13 +175,13 @@ const End = ({ submitAll, uploading, transferred }) => {
         justifyContent: 'center',
         height: '100%',
       }}>
-      <Header margin="0px 0px 10px 0px" style={{ textAlign: 'center' }}>
+      <Header margin="0px 0px 10px 0px" style={{textAlign: 'center'}}>
         {selectedLanguage.weGotYou}
       </Header>
       {uploading ? (
         <>
           <Text
-            style={{ fontSize: 20, marginBottom: 10, textAlign: 'center' }}
+            style={{fontSize: 20, marginBottom: 10, textAlign: 'center'}}
             color="#000">
             {transferred}%
           </Text>

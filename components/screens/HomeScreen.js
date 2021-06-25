@@ -33,7 +33,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <ScrollView>
-      <Container background="#fff" style={{padding: 20}}>
+      <Container background="#fff" style={{padding: 20, height: '100%'}}>
         <TopHeader
           lang
           languageOpen={languageOpen}
@@ -44,7 +44,8 @@ const HomeScreen = ({navigation}) => {
           <View
             style={{
               display: 'flex',
-              height: '100%',
+              height: 600,
+              background: '#fff',
               alignItems: 'center',
               direction: 'column',
               justifyContent: 'center',

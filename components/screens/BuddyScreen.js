@@ -27,6 +27,22 @@ const BuddyScreen = ({navigation}) => {
 
   const [latestUser, loading] = useDocumentData(`users/${user.uid}`);
 
+  console.log(latestUser, user.uid);
+
+  useEffect(() => {
+    if (latestUser && potentialBuddiesDatabase) {
+      const buddies = potentialBuddiesDatabase.filter((buddy) => {
+        if (
+          !latestUser?.likes.includes(buddy.id) &&
+          !latestUser?.dislikes.includes(buddy.id)
+        ) {
+          return buddy;
+        }
+      });
+      setPotentialBuddies(buddies);
+    }
+  }, [latestUser, potentialBuddiesDatabase]);
+
   const checkIfLikedorDisliked = async (like) => {
     if (
       potentialBuddies[selected].likes &&
@@ -79,20 +95,6 @@ const BuddyScreen = ({navigation}) => {
       })
       .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    if (latestUser && potentialBuddiesDatabase) {
-      const buddies = potentialBuddiesDatabase.filter((buddy) => {
-        if (
-          !latestUser?.likes.includes(buddy.id) &&
-          !latestUser?.dislikes.includes(buddy.id)
-        ) {
-          return buddy;
-        }
-      });
-      setPotentialBuddies(buddies);
-    }
-  }, [latestUser, potentialBuddiesDatabase]);
 
   return (
     <>
